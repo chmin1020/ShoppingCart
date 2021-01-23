@@ -7,7 +7,7 @@
     android:layout_marginVertical="4dp">
 
     <TextView
-        android:id="@+id/tv_number"
+        android:id="@+id/tv_head"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
