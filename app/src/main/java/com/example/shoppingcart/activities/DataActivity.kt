@@ -36,40 +36,31 @@ class DataActivity : AppCompatActivity() {
         }
         viewModel = ViewModelProvider(this, viewModelFactory!!).get<roomViewModel>(roomViewModel::class.java)
 
-        ib_add.setOnClickListener { //>???????
-            try {
-                if (et_item.text.toString() != "") {
-                    smallListAdapter.insert(et_item.text.toString())
-
-                }
-            }catch(e : NullPointerException){
-                Log.d("Null","11")
+        ib_add.setOnClickListener {
+            val tmp:String = et_item.text.toString()
+            if (tmp != "") {
+                smallListAdapter.insert(tmp)
                 et_item.text.clear()
             }
 
         }
 
         tv_save.setOnClickListener{
-            if(smallListAdapter.itemList == null){
-                Toast.makeText(this,"입력된 항목이 없어요!",Toast.LENGTH_SHORT).show()
-            }
-            else {
-                val date = Date(System.currentTimeMillis())
-                val sdf = SimpleDateFormat("yyyy/MM/dd HH:mm")
-                val cur = sdf.format(date)
+            val date = Date(System.currentTimeMillis())
+            val sdf = SimpleDateFormat("yyyy/MM/dd HH:mm")
+            val cur = sdf.format(date)
 
-                viewModel!!.insert(
-                    bigList(
-                        et_title.text.toString(),
-                        cur,
-                        smallListAdapter.itemList,
-                        smallListAdapter.checkList
-                    )
+            viewModel!!.insert(
+                bigList(
+                    et_title.text.toString(),
+                    cur,
+                    smallListAdapter.itemList,
+                    smallListAdapter.checkList
                 )
+            )
 
-                Toast.makeText(this, "저장되었습니다.", Toast.LENGTH_SHORT).show()
-                finish()
-            }
+            Toast.makeText(this, "저장되었습니다.", Toast.LENGTH_SHORT).show()
+            finish()
         }
     }
 }

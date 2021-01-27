@@ -12,14 +12,8 @@ import com.example.shoppingcart.R
 import java.util.*
 
 class smallListAdapter : RecyclerView.Adapter<smallListAdapter.CustomViewHolder>() {
-    var itemList : ArrayList<String>? = null
-    var checkList : ArrayList<String>? = null
-
-
-    fun ShoppingAdapter(List1: ArrayList<String>?, List2: ArrayList<String>?) {
-        this.itemList = List1
-        this.checkList = List2
-    }
+    var itemList : ArrayList<String> = ArrayList()
+    var checkList : ArrayList<String> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         val v: View = LayoutInflater.from(parent.context).inflate(R.layout.small_list, parent, false)
@@ -27,31 +21,31 @@ class smallListAdapter : RecyclerView.Adapter<smallListAdapter.CustomViewHolder>
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
-        holder.tv_name.text = itemList!![position]
-        if (checkList!![position] == "T")
+        holder.tv_name.text = itemList[position]
+        if (checkList[position] == "T")
             holder.cb_check.isChecked = true
         else holder.cb_check.isChecked = false
 
         holder.iv_delete.setOnClickListener { delete(holder.adapterPosition) }
         holder.cb_check.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked == true) checkList!![position] = "T" else checkList!![position] = "F"
+            if (isChecked == true) checkList[position] = "T" else checkList[position] = "F"
         }
     }
 
     override fun getItemCount(): Int {
-        return if (itemList != null) itemList!!.size else 0
+        return if (!itemList.isEmpty()) itemList.size else 0
     }
 
     fun insert(s: String) {
-        itemList!!.add(s)
-        checkList?.add("F")
+        itemList.add(s)
+        checkList.add("F")
         notifyDataSetChanged()
     }
 
     fun delete(position: Int) {
         try {
-            itemList!!.removeAt(position)
-            checkList!!.removeAt(position)
+            itemList.removeAt(position)
+            checkList.removeAt(position)
             notifyItemRemoved(position)
         } catch (e: IndexOutOfBoundsException) {
             e.printStackTrace()
