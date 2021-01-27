@@ -44,7 +44,7 @@ class smallListAdapter : RecyclerView.Adapter<smallListAdapter.CustomViewHolder>
 
     fun insert(s: String) {
         itemList!!.add(s)
-        checkList!!.add("F")
+        checkList?.add("F")
         notifyDataSetChanged()
     }
 

@@ -1,7 +1,9 @@
 package com.example.shoppingcart.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -22,8 +24,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-
         spList.adapter = bigListAdapter
         spList.layoutManager = LinearLayoutManager(this)
 
@@ -41,6 +41,10 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
+        ib_add.setOnClickListener({
+            val intent : Intent = Intent(this,DataActivity::class.java)
+            startActivity(intent)
+        })
     }
 
 

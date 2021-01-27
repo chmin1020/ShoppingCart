@@ -7,19 +7,19 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.shoppingcart.item.bigList
 
-@Database(entities = [bigList::class], version = 1)
+@Database(entities = [bigList::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)
-abstract class roomDB : RoomDatabase() {
+abstract class RoomDB : RoomDatabase() {
     abstract fun bigListDao(): bigListDao
 
     companion object {
-        private var INSTANCE: roomDB? = null
-        fun getDB(context: Context): roomDB? {
+        private var INSTANCE: RoomDB? = null
+        fun getDB(context: Context): RoomDB? {
             if (INSTANCE == null) {
-                synchronized(roomDB::class) {
+                synchronized(RoomDB::class) {
                     INSTANCE = Room.databaseBuilder(
                         context.applicationContext,
-                        roomDB::class.java, "RDB"
+                        RoomDB::class.java, "RDB"
                     ).fallbackToDestructiveMigration()
                         .build()
                 }

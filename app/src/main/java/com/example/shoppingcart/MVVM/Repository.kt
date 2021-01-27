@@ -5,13 +5,13 @@ import androidx.lifecycle.LiveData
 import com.example.shoppingcart.item.bigList
 
 class Repository internal constructor(application: Context) {
-    private val database: roomDB
+    private val database: RoomDB
     private val bigListDao: bigListDao
     private val elements: LiveData<List<bigList?>?>?
 
     //생성자 (application 받아옴)
     init {
-        database = roomDB.getDB(application)!!
+        database = RoomDB.getDB(application)!!
         bigListDao = database.bigListDao()
         elements = bigListDao.getAllBigList()
     }

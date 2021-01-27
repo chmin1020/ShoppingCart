@@ -1,26 +1,33 @@
 package com.example.shoppingcart.activities
 
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shoppingcart.MVVM.roomViewModel
 import com.example.shoppingcart.R
-import com.example.shoppingcart.adapter.bigListAdapter
-import kotlinx.android.synthetic.main.activity_main.*
+import com.example.shoppingcart.adapter.smallListAdapter
+import com.example.shoppingcart.item.bigList
+import kotlinx.android.synthetic.main.activity_data.*
+import kotlinx.android.synthetic.main.activity_data.ib_add
+import kotlinx.android.synthetic.main.activity_data.spList
+import java.text.SimpleDateFormat
+import java.util.*
 
 class DataActivity : AppCompatActivity() {
     //database
     private var viewModel: roomViewModel? = null
     private var viewModelFactory: ViewModelProvider.AndroidViewModelFactory? = null
-    val bigListAdapter: bigListAdapter = bigListAdapter()
+    val smallListAdapter: smallListAdapter = smallListAdapter()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_data)
 
-        spList.adapter = bigListAdapter
+        spList.adapter = smallListAdapter
         spList.layoutManager = LinearLayoutManager(this)
 
         //뷰모델 설정(내부 데이터베이스를 효율적으로 활용하기 위함)
@@ -29,5 +36,40 @@ class DataActivity : AppCompatActivity() {
         }
         viewModel = ViewModelProvider(this, viewModelFactory!!).get<roomViewModel>(roomViewModel::class.java)
 
+        ib_add.setOnClickListener { //>???????
+            try {
+                if (et_item.text.toString() != "") {
+                    smallListAdapter.insert(et_item.text.toString())
+
+                }
+            }catch(e : NullPointerException){
+                Log.d("Null","11")
+                et_item.text.clear()
+            }
+
+        }
+
+        tv_save.setOnClickListener{
+            if(smallListAdapter.itemList == null){
+                Toast.makeText(this,"입력된 항목이 없어요!",Toast.LENGTH_SHORT).show()
+            }
+            else {
+                val date = Date(System.currentTimeMillis())
+                val sdf = SimpleDateFormat("yyyy/MM/dd HH:mm")
+                val cur = sdf.format(date)
+
+                viewModel!!.insert(
+                    bigList(
+                        et_title.text.toString(),
+                        cur,
+                        smallListAdapter.itemList,
+                        smallListAdapter.checkList
+                    )
+                )
+
+                Toast.makeText(this, "저장되었습니다.", Toast.LENGTH_SHORT).show()
+                finish()
+            }
+        }
     }
 }

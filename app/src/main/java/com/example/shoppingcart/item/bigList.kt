@@ -21,7 +21,7 @@ class bigList {
     private var list2: ArrayList<String>? = null
 
 
-    fun bigList (
+    constructor(
         title: String?,
         date: String?,
         list: ArrayList<String>?,

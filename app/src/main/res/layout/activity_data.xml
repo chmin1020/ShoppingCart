@@ -26,7 +26,41 @@
             android:text="@string/app_name"
             android:textSize="32sp"
             android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/tv_save"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:gravity="center"
+            android:layout_marginRight="10dp"
+            android:text="저장"
+            android:textColor="#000000"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            />
     </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:id="@+id/getTitle"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/et_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginVertical="8dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:background="@drawable/box_border"
+            android:fontFamily="@font/font_goodharu"
+            android:textSize="12pt"
+            android:paddingHorizontal="8dp"
+            android:hint="목록 이름"/>
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/search_bar"
@@ -35,7 +69,24 @@
         android:layout_weight="2"
         android:orientation="horizontal">
 
+        <EditText
+            android:id="@+id/et_item"
+            android:layout_width="300dp"
+            android:layout_height="match_parent"
+            android:layout_margin="6dp"
+            android:background="@drawable/box_border"
+            android:fontFamily="@font/font_goodharu"
+            android:textSize="12pt"
+            android:paddingHorizontal="8dp"
+            android:hint="항목 입력"/>
 
+        <ImageButton
+            android:id="@+id/ib_add"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_margin="6dp"
+            android:src="@drawable/addcart"
+            android:background="#82DD18"/>
 
     </LinearLayout>
 
@@ -43,12 +94,12 @@
         android:id="@+id/miniLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="16.5"
+        android:layout_weight="14.5"
         android:background="#FFFFFF"
         android:orientation="horizontal">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/list"
+            android:id="@+id/spList"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
