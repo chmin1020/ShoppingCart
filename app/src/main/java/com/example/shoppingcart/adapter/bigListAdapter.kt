@@ -61,11 +61,11 @@ class bigListAdapter : RecyclerView.Adapter<bigListAdapter.CustomViewHolder>(),
     //검색용 필터
     override fun getFilter(): Filter {
         return object : Filter() {
-            override fun performFiltering(constraint: CharSequence): FilterResults {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
                 FList =
-                    if (constraint == null || constraint.length == 0) { //검색 창에 입력된 내용이 없을 시 전체 리스트 출력
+                    if (constraint == null || constraint.length == 0)  //검색 창에 입력된 내용이 없을 시 전체 리스트 출력
                         UfList
-                    } else {
+                    else {
                         val filteringList: MutableList<bigList> = ArrayList<bigList>()
                         val chk = constraint.toString().trim { it <= ' ' }
                         for (i in UfList!!.indices) {  //필터되지 않은 전체 리스트에서 조건에 맞는 것만 filteringList에 추가
@@ -89,7 +89,7 @@ class bigListAdapter : RecyclerView.Adapter<bigListAdapter.CustomViewHolder>(),
     }
 
     //이 리사이클러에서 사용할 뷰홀더를 정의한 클래스
-    inner class CustomViewHolder(itemView: View) : ViewHolder(itemView) {
+    class CustomViewHolder internal constructor(itemView: View) : ViewHolder(itemView) {
         //menu_item.xml의 값들을 받아서 할당해준다.
         var tv_title: TextView
         var tv_date: TextView

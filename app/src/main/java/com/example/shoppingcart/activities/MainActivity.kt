@@ -17,13 +17,13 @@ class MainActivity : AppCompatActivity() {
     //database
     private var viewModel: roomViewModel? = null
     private var viewModelFactory: AndroidViewModelFactory? = null
-
+    val bigListAdapter: bigListAdapter = bigListAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val bigListAdapter: bigListAdapter? = bigListAdapter()
+
         spList.adapter = bigListAdapter
         spList.layoutManager = LinearLayoutManager(this)
 
@@ -37,11 +37,12 @@ class MainActivity : AppCompatActivity() {
         //데이터베이스의 값이 바뀌면 관찰하여 바로 update 시켜준다.
         viewModel!!.getAllBigList()?.observe(this, object : Observer<List<bigList?>?> {
             override fun onChanged(memos: List<bigList?>?) {
-                bigListAdapter?.update(viewModel!!.getAllBigList()?.getValue())
+                bigListAdapter.update(viewModel!!.getAllBigList()?.getValue())
             }
         })
 
     }
+
 
     //텍스트와쳐의 메소드 오버라이드(글자가 바뀔 때 실행될 코드)
     fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}

@@ -9,6 +9,13 @@ class Repository internal constructor(application: Context) {
     private val bigListDao: bigListDao
     private val elements: LiveData<List<bigList?>?>?
 
+    //생성자 (application 받아옴)
+    init {
+        database = roomDB.getDB(application)!!
+        bigListDao = database.bigListDao()
+        elements = bigListDao.getAllBigList()
+    }
+
     //view모델에서 db에 접근을 요청하면 실행될 함수
     fun getAllBigList(): LiveData<List<bigList?>?>? {
         return elements
@@ -28,12 +35,5 @@ class Repository internal constructor(application: Context) {
             thread.start()
         } catch (e: Exception) {
         }
-    }
-
-    //생성자 (application 받아옴)
-    init {
-        database = roomDB.getDB(application)
-        bigListDao = database.bigListDao()
-        elements = bigListDao.getAllBigList()
     }
 }

@@ -13,8 +13,8 @@ abstract class roomDB : RoomDatabase() {
     abstract fun bigListDao(): bigListDao
 
     companion object {
-        var INSTANCE: roomDB? = null
-        fun getDB(context: Context): roomDB {
+        private var INSTANCE: roomDB? = null
+        fun getDB(context: Context): roomDB? {
             if (INSTANCE == null) {
                 synchronized(roomDB::class) {
                     INSTANCE = Room.databaseBuilder(
