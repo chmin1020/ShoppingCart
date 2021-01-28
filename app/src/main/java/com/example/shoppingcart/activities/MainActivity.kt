@@ -35,9 +35,9 @@ class MainActivity : AppCompatActivity() {
 
 
         //데이터베이스의 값이 바뀌면 관찰하여 바로 update 시켜준다.
-        viewModel!!.getAllBigList()?.observe(this, object : Observer<List<bigList?>?> {
-            override fun onChanged(memos: List<bigList?>?) {
-                bigListAdapter.update(viewModel!!.getAllBigList()?.getValue())
+        viewModel!!.getAllBigList().observe(this, object : Observer<List<bigList>> {
+            override fun onChanged(memos: List<bigList>) {
+                bigListAdapter.update(viewModel.getAllBigList().getValue())
             }
         })
 

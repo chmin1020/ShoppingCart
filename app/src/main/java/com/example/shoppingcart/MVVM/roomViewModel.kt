@@ -7,18 +7,18 @@ import com.example.shoppingcart.item.bigList
 
 class roomViewModel(application: Application) : AndroidViewModel(application) {
     private val repository: Repository
-    private val elements: LiveData<List<bigList?>?>?
+    private val elements: LiveData<List<bigList>>
 
     //쓰레드에서 접근할 메소드 생성
-    fun getAllBigList() : LiveData<List<bigList?>?>? {
+    fun getAllBigList() : LiveData<List<bigList>> {
         return elements
     }
 
-    fun insert(bigList: bigList?) {
+    fun insert(bigList: bigList) {
         repository.insert(bigList)
     }
 
-    fun delete(bigList: bigList?) {
+    fun delete(bigList: bigList) {
         repository.delete(bigList)
     }
 

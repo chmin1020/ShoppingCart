@@ -4,34 +4,16 @@ import androidx.room.*
 import java.util.*
 
 @Entity
-class bigList {
+class bigList(
+    @ColumnInfo(name = "title")
+    private var title: String?, @ColumnInfo(name = "date")
+    private var date: String?, @ColumnInfo(name = "itemList")
+    private var list: ArrayList<String>?, @ColumnInfo(name = "checkList")
+    private var list2: ArrayList<String>?
+) {
     @PrimaryKey(autoGenerate = true)
     private var id = 0
 
-    @ColumnInfo(name = "title")
-    private var title: String? = null
-
-    @ColumnInfo(name = "date")
-    private var date: String? = null
-
-    @ColumnInfo(name = "itemList")
-    private var list: ArrayList<String>? = null
-
-    @ColumnInfo(name = "checkList")
-    private var list2: ArrayList<String>? = null
-
-
-    constructor(
-        title: String?,
-        date: String?,
-        list: ArrayList<String>?,
-        list2: ArrayList<String>?
-    ) {
-        this.title = title
-        this.date = date
-        this.list = list
-        this.list2 = list2
-    }
 
     fun getId(): Int {
         return id

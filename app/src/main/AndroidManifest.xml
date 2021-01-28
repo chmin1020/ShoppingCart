@@ -17,6 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.DataActivity"  android:windowSoftInputMode="adjustNothing"/>
+        <activity android:name=".activities.RecordActivity"  android:windowSoftInputMode="adjustNothing"/>
     </application>
 
 </manifest>
