@@ -20,7 +20,7 @@ class DataActivity : AppCompatActivity() {
     //database
     private var viewModel: roomViewModel? = null
     private var viewModelFactory: ViewModelProvider.AndroidViewModelFactory? = null
-    val smallListAdapter: smallListAdapter = smallListAdapter()
+    private val smallListAdapter: smallListAdapter = smallListAdapter()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,13 +52,9 @@ class DataActivity : AppCompatActivity() {
 
             viewModel!!.insert(
                 bigList(
-                    et_title.text.toString(),
-                    cur,
-                    smallListAdapter.itemList,
-                    smallListAdapter.checkList
-                )
+                    et_title.text.toString(), cur,
+                    smallListAdapter.itemList, smallListAdapter.checkList)
             )
-
             Toast.makeText(this, "저장되었습니다.", Toast.LENGTH_SHORT).show()
             finish()
         }

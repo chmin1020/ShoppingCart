@@ -3,7 +3,7 @@ package com.example.shoppingcart.activities
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
-import android.view.View
+import android.text.TextWatcher
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -31,29 +31,29 @@ class MainActivity : AppCompatActivity() {
         if (viewModelFactory == null) {
             viewModelFactory = AndroidViewModelFactory(this.getApplication())
         }
-        viewModel = ViewModelProvider(this, viewModelFactory!!).get<roomViewModel>(roomViewModel::class.java)
+        viewModel = ViewModelProvider(this, viewModelFactory!!).get(roomViewModel::class.java)
 
-
-        //데이터베이스의 값이 바뀌면 관찰하여 바로 update 시켜준다.
-        viewModel!!.getAllBigList().observe(this, object : Observer<List<bigList>> {
-            override fun onChanged(memos: List<bigList>) {
-                bigListAdapter.update(viewModel.getAllBigList().getValue())
-            }
-        })
+        val l_Observer = Observer<List<bigList>>{
+            bigListAdapter.update(viewModel!!.getAllBigList().value)
+        }
+        viewModel!!.getAllBigList().observe(this,l_Observer)
 
         ib_add.setOnClickListener({
-            val intent : Intent = Intent(this,DataActivity::class.java)
+            val intent = Intent(this,DataActivity::class.java)
             startActivity(intent)
         })
+
+        et_search.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {
+
+            }
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                bigListAdapter.getFilter().filter(et_search.text)
+            }
+        })
     }
-
-
-    //텍스트와쳐의 메소드 오버라이드(글자가 바뀔 때 실행될 코드)
-    fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-    fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-        bigListAdapter.getFilter().filter(et_search.text)
-    }
-
-    fun afterTextChanged(s: Editable?) {}
 }
+
