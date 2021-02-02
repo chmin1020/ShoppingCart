@@ -42,10 +42,9 @@ class RecordActivity : AppCompatActivity(){
             Toast.makeText(this,"오류 발생",Toast.LENGTH_SHORT).show()
             finish()
         }
-        tv_title.setText(intent.getStringExtra("title"))
-        smallListAdapter.itemList = intent.getStringArrayListExtra("itemlist")
-        smallListAdapter.checkList= intent.getStringArrayListExtra("checklist")
-
+        tv_name.text = intent.getStringExtra("title")
+        smallListAdapter.itemList = intent.getStringArrayListExtra("itemList")
+        smallListAdapter.checkList= intent.getStringArrayListExtra("checkList")
 
         ib_add.setOnClickListener {
             val tmp: String = et_item.text.toString()

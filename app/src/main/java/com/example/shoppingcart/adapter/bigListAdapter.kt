@@ -1,21 +1,27 @@
 package com.example.shoppingcart.adapter
 
+import android.app.AlertDialog
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
 import android.widget.TextView
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.example.shoppingcart.MVVM.roomViewModel
 import com.example.shoppingcart.R
 import com.example.shoppingcart.activities.RecordActivity
 import com.example.shoppingcart.item.bigList
+import kotlinx.android.synthetic.main.big_list.view.*
 import java.util.*
 
 class bigListAdapter : RecyclerView.Adapter<bigListAdapter.CustomViewHolder>(),
     Filterable {
+
     //리사이클러뷰를 이루는 리스트 데이터를 저장하는 곳
     private var UfList: List<bigList>? = ArrayList()
     private var FList: List<bigList>? = ArrayList()
@@ -29,9 +35,10 @@ class bigListAdapter : RecyclerView.Adapter<bigListAdapter.CustomViewHolder>(),
     //리스트 항목 뷰를 뷰홀더와 결합하는 역할의 코드
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         //인덱스는 리스트인덱스+1, 타이틀은 제목을 가져옴
-        holder.tv_title.setText(FList?.get(position)?.getTitle())
-        holder.tv_date.setText(FList?.get(position)?.getDate())
+        holder.tv_title.text = FList?.get(position)?.getTitle()
+        holder.tv_date.text = FList?.get(position)?.getDate()
         holder.itemView.getTag(position)
+
         holder.itemView.setOnClickListener { v -> //아이템을 누르면 인텐트를 통해 내용 확인 란으로 이동
             val context = v.context
 
@@ -43,6 +50,31 @@ class bigListAdapter : RecyclerView.Adapter<bigListAdapter.CustomViewHolder>(),
             intent.putExtra("itemList", FList?.get(position)?.getList())
             intent.putExtra("checkList", FList?.get(position)?.getList2())
             context.startActivity(intent)
+        }
+
+        holder.itemView.iv_delete.setOnClickListener { v ->  //보완 필요 -> viewmodel 내에서도 delete 필요
+            val context = v.context
+
+            //삭제 버튼 클릭 시 생성될 다이얼로그 설정
+            val alertDialog = AlertDialog.Builder(context)
+                .setTitle("") //다이얼로그의 제목
+                .setMessage("목록을 삭제하시겠습니까?") //다이얼로그의 내용
+
+            alertDialog.setPositiveButton("네") { dialog, which ->
+
+                val bigList = bigList(
+                    FList?.get(position)?.getTitle(),
+                    FList?.get(position)?.getDate(),
+                    FList?.get(position)?.getList(),
+                    FList?.get(position)?.getList2()
+                )
+                FList?.get(position)?.getId()?.let { bigList.setId(it) }
+
+                delete(position)
+            }
+            alertDialog.setNegativeButton("아니오") { dialog, which -> }
+
+            alertDialog.create().show()
         }
     }
 
@@ -56,6 +88,19 @@ class bigListAdapter : RecyclerView.Adapter<bigListAdapter.CustomViewHolder>(),
         FList = list //바뀐 리스트를 받아와서
         UfList = list
         notifyDataSetChanged() //화면에서 갱신해준다
+    }
+
+    fun delete(position: Int) {
+        try {
+            val tmpList = FList as ArrayList
+            tmpList.removeAt(position)
+            FList = tmpList
+            Log.d("aa1","good")
+            notifyItemRemoved(position)
+        } catch (e: IndexOutOfBoundsException) {
+            Log.d("aa2","error")
+            e.printStackTrace()
+        }
     }
 
     //검색용 필터

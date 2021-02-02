@@ -34,7 +34,7 @@ class DataActivity : AppCompatActivity() {
         if (viewModelFactory == null) {
             viewModelFactory = ViewModelProvider.AndroidViewModelFactory(this.getApplication())
         }
-        viewModel = ViewModelProvider(this, viewModelFactory!!).get<roomViewModel>(roomViewModel::class.java)
+        viewModel = ViewModelProvider(this, viewModelFactory!!).get(roomViewModel::class.java)
 
         ib_add.setOnClickListener {
             val tmp:String = et_item.text.toString()

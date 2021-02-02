@@ -1,9 +1,11 @@
 package com.example.shoppingcart.activities
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -14,6 +16,7 @@ import com.example.shoppingcart.R
 import com.example.shoppingcart.adapter.bigListAdapter
 import com.example.shoppingcart.item.bigList
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.big_list.view.*
 
 class MainActivity : AppCompatActivity() {
     //database
@@ -36,10 +39,10 @@ class MainActivity : AppCompatActivity() {
         val l_Observer = Observer<List<bigList>>{
             bigListAdapter.update(viewModel!!.getAllBigList().value)
         }
-        viewModel!!.getAllBigList().observe(this,l_Observer)
+        viewModel!!.getAllBigList().observe(this, l_Observer)
 
         ib_add.setOnClickListener({
-            val intent = Intent(this,DataActivity::class.java)
+            val intent = Intent(this, DataActivity::class.java)
             startActivity(intent)
         })
 
@@ -47,9 +50,11 @@ class MainActivity : AppCompatActivity() {
             override fun afterTextChanged(p0: Editable?) {
 
             }
+
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
             }
+
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 bigListAdapter.getFilter().filter(et_search.text)
             }
