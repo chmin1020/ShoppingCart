@@ -49,6 +49,7 @@ class RecordActivity : AppCompatActivity(){
         smallListAdapter.itemList = intent.getStringArrayListExtra("itemList")
         smallListAdapter.checkList= intent.getStringArrayListExtra("checkList")
 
+
         ib_add.setOnClickListener {
             val tmp: String = et_item.text.toString()
             if (tmp != "") {

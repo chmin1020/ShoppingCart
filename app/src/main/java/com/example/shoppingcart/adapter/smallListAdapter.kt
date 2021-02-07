@@ -1,5 +1,6 @@
 package com.example.shoppingcart.adapter
 
+import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,10 +25,25 @@ class smallListAdapter : RecyclerView.Adapter<smallListAdapter.CustomViewHolder>
         if(itemList!=null && checkList != null) {
             holder.tv_name.text = itemList!![position]
             holder.cb_check.isChecked = checkList!![position] == "T"
+ 
+            //체크에 따른 취소선 표시
+            if(holder.cb_check.isChecked == true)
+                holder.tv_name.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+            else
+                holder.tv_name.paintFlags = 0
+
+
 
             holder.iv_delete.setOnClickListener { delete(holder.adapterPosition) }
             holder.cb_check.setOnCheckedChangeListener { buttonView, isChecked ->
-                if (isChecked == true) checkList!![position] = "T" else checkList!![position] = "F"
+                if (isChecked == true) {
+                    checkList!![position] = "T"
+                    holder.tv_name.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+                }
+                else {
+                    checkList!![position] = "F"
+                    holder.tv_name.paintFlags = 0
+                }
             }
         }
     }
