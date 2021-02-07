@@ -45,7 +45,7 @@ class RecordActivity : AppCompatActivity(){
             Toast.makeText(this,"오류 발생",Toast.LENGTH_SHORT).show()
             finish()
         }
-        tv_name.text = intent.getStringExtra("title")
+        tv_title.text = intent.getStringExtra("title")
         smallListAdapter.itemList = intent.getStringArrayListExtra("itemList")
         smallListAdapter.checkList= intent.getStringArrayListExtra("checkList")
 
@@ -64,7 +64,7 @@ class RecordActivity : AppCompatActivity(){
         val date = Date(System.currentTimeMillis())
         val sdf = SimpleDateFormat("yyyy/MM/dd HH:mm")
         val cur = sdf.format(date)
-        val list = bigList(tv_name.text.toString(),cur,smallListAdapter.itemList,smallListAdapter.checkList)
+        val list = bigList(tv_title.text.toString(),cur,smallListAdapter.itemList,smallListAdapter.checkList)
         list.setId(id)
 
         viewModel!!.insert(list)
