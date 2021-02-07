@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:weightSum="20"
     android:orientation="vertical">
 
@@ -42,7 +43,7 @@
 
         <EditText
             android:id="@+id/et_search"
-            android:layout_width="250dp"
+            android:layout_width="320dp"
             android:layout_height="match_parent"
             android:layout_marginHorizontal="4dp"
             android:layout_marginVertical="8dp"
@@ -52,28 +53,30 @@
             android:textSize="12pt"
             android:hint="검색" />
 
-        <ImageButton
-            android:id="@+id/ib_add"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/add" />
-
     </LinearLayout>
 
-    <LinearLayout
+    <FrameLayout
         android:id="@+id/miniLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="16.5"
         android:background="#FFFFFF"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/spList"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-    </LinearLayout>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="15dp"
+            android:backgroundTint="@color/colorPrimary"
+            app:srcCompat="@drawable/add"
+            app:fabSize="normal"/>
+
+    </FrameLayout>
 </LinearLayout>

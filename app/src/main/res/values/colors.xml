@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#e7ef93</color>
-    <color name="colorPrimaryDark">#cfed21</color>
+    <color name="colorPrimaryDark">#BDDD02</color>
     <color name="colorAccent">#009106</color>
 
     <color name="bigList_head">#89FF00</color>

@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
         viewModel!!.getAllBigList().observe(this, listObserver)
 
         //새로운 쇼핑리스트 추가 버튼 클릭
-        ib_add.setOnClickListener {
+        fab_add.setOnClickListener {
             val intent = Intent(this, DataActivity::class.java)
             startActivity(intent)
         }
