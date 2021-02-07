@@ -26,18 +26,7 @@
             android:text="@string/app_name"
             android:textSize="32sp"
             android:textStyle="bold"/>
-        <TextView
-            android:id="@+id/tv_save"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="end"
-            android:gravity="center"
-            android:layout_marginRight="10dp"
-            android:text="저장"
-            android:textColor="#000000"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            />
+
     </androidx.appcompat.widget.Toolbar>
 
     <LinearLayout
@@ -94,7 +83,7 @@
         android:id="@+id/miniLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="14.5"
+        android:layout_weight="12.5"
         android:background="#FFFFFF"
         android:orientation="horizontal">
 
@@ -104,4 +93,16 @@
             android:layout_height="match_parent" />
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_save"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:layout_margin="15dp"
+        android:fontFamily="@font/font_goodharu"
+        android:background="#A6F14E"
+        android:textColor="#000000"
+        android:text="저장"
+        android:textSize="28sp" />
 </LinearLayout>

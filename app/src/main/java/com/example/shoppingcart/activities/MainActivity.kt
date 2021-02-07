@@ -1,10 +1,12 @@
 package com.example.shoppingcart.activities
 
 import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -36,27 +38,37 @@ class MainActivity : AppCompatActivity() {
         }
         viewModel = ViewModelProvider(this, viewModelFactory!!).get(roomViewModel::class.java)
 
-        val l_Observer = Observer<List<bigList>>{
+        val listObserver = Observer<List<bigList>> {
             bigListAdapter.update(viewModel!!.getAllBigList().value)
         }
-        viewModel!!.getAllBigList().observe(this, l_Observer)
+        viewModel!!.getAllBigList().observe(this, listObserver)
 
-        ib_add.setOnClickListener({
+        //새로운 쇼핑리스트 추가 버튼 클릭
+        ib_add.setOnClickListener {
             val intent = Intent(this, DataActivity::class.java)
             startActivity(intent)
+        }
+
+        //리스트 아이템 내 삭제 버튼 클릭
+        bigListAdapter.setItemClickListener(object: bigListAdapter.OnItemClickListener {
+            override fun onClick(v: View, position: Int) {
+                val dialog = AlertDialog.Builder(this@MainActivity).setTitle("")
+                    .setMessage("정말 삭제하시겠습니까?")
+                dialog.setPositiveButton("예") { dialog, which ->
+                    viewModel!!.delete(bigListAdapter.getItemByPosition(position))
+                }
+                dialog.setNegativeButton("아니오") { dialog, which -> }
+                dialog.create().show()
+            }
         })
 
         et_search.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
-
             }
-
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
             }
-
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                bigListAdapter.getFilter().filter(et_search.text)
+                bigListAdapter.filter.filter(et_search.text)
             }
         })
     }

@@ -13,12 +13,15 @@ import com.example.shoppingcart.item.bigList
 import kotlinx.android.synthetic.main.activity_record.*
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.properties.Delegates
 
 class RecordActivity : AppCompatActivity(){
     //database
     private var viewModel: roomViewModel? = null
     private var viewModelFactory: ViewModelProvider.AndroidViewModelFactory? = null
-    val smallListAdapter: smallListAdapter = smallListAdapter()
+    private val smallListAdapter: smallListAdapter = smallListAdapter()
+
+    private var id by Delegates.notNull<Int>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,8 +39,8 @@ class RecordActivity : AppCompatActivity(){
             viewModelFactory!!
         ).get<roomViewModel>(roomViewModel::class.java)
 
-        val intent: Intent = getIntent()
-        val id: Int = intent.getIntExtra("id",-1)
+        val intent: Intent = intent
+        id = intent.getIntExtra("id",-1)
         if(id==-1){
             Toast.makeText(this,"오류 발생",Toast.LENGTH_SHORT).show()
             finish()
@@ -53,17 +56,18 @@ class RecordActivity : AppCompatActivity(){
                 et_item.text.clear()
             }
         }
+    }
 
-        tv_save.setOnClickListener {
-            val date = Date(System.currentTimeMillis())
-            val sdf = SimpleDateFormat("yyyy/MM/dd HH:mm")
-            val cur = sdf.format(date)
-            val list = bigList(tv_name.text.toString(),cur,smallListAdapter.itemList,smallListAdapter.checkList)
-            list.setId(id)
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val date = Date(System.currentTimeMillis())
+        val sdf = SimpleDateFormat("yyyy/MM/dd HH:mm")
+        val cur = sdf.format(date)
+        val list = bigList(tv_name.text.toString(),cur,smallListAdapter.itemList,smallListAdapter.checkList)
+        list.setId(id)
 
-            viewModel!!.insert(list)
-            Toast.makeText(this, "저장되었습니다.", Toast.LENGTH_SHORT).show()
-            finish()
-        }
+        viewModel!!.insert(list)
+        Toast.makeText(this, "저장되었습니다.", Toast.LENGTH_SHORT).show()
+        finish()
     }
 }

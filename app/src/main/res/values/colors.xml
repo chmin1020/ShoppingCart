@@ -2,11 +2,11 @@
 <resources>
     <color name="colorPrimary">#e7ef93</color>
     <color name="colorPrimaryDark">#cfed21</color>
-    <color name="colorAccent">#D2F800</color>
+    <color name="colorAccent">#009106</color>
 
     <color name="bigList_head">#89FF00</color>
     <color name="bigList_content">#B6FFB9</color>
     <color name="bigList_date">#DDFFDE</color>
 
-    <color name="smallList">#A0F6A3</color>
+    <color name="smallList">#DFFFE0</color>
 </resources>

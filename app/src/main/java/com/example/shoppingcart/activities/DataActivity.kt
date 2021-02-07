@@ -1,5 +1,7 @@
 package com.example.shoppingcart.activities
 
+import android.app.AlertDialog
+import android.app.Dialog
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -37,15 +39,14 @@ class DataActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this, viewModelFactory!!).get(roomViewModel::class.java)
 
         ib_add.setOnClickListener {
-            val tmp:String = et_item.text.toString()
+            val tmp: String = et_item.text.toString()
             if (tmp != "") {
                 smallListAdapter.insert(tmp)
                 et_item.text.clear()
             }
-
         }
 
-        tv_save.setOnClickListener{
+        btn_save.setOnClickListener{
             val date = Date(System.currentTimeMillis())
             val sdf = SimpleDateFormat("yyyy/MM/dd HH:mm")
             val cur = sdf.format(date)
@@ -53,10 +54,31 @@ class DataActivity : AppCompatActivity() {
             viewModel!!.insert(
                 bigList(
                     et_title.text.toString(), cur,
-                    smallListAdapter.itemList, smallListAdapter.checkList)
+                    smallListAdapter.itemList, smallListAdapter.checkList
+                )
             )
             Toast.makeText(this, "저장되었습니다.", Toast.LENGTH_SHORT).show()
             finish()
         }
+    }
+
+    override fun onBackPressed() {
+        val dialog = AlertDialog.Builder(this).setTitle("").setMessage("저장하시겠습니까?")
+        dialog.setPositiveButton("예"){dialog,which->
+            val date = Date(System.currentTimeMillis())
+            val sdf = SimpleDateFormat("yyyy/MM/dd HH:mm")
+            val cur = sdf.format(date)
+
+            viewModel!!.insert(
+                bigList(
+                    et_title.text.toString(), cur,
+                    smallListAdapter.itemList, smallListAdapter.checkList
+                )
+            )
+            Toast.makeText(this, "저장되었습니다.", Toast.LENGTH_SHORT).show()
+            finish()
+        }
+        dialog.setNegativeButton("아니오"){dialog,which-> finish()}
+        dialog.create().show()
     }
 }
