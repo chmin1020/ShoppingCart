@@ -73,10 +73,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
-            android:layout_margin="15dp"
+            android:layout_margin="16dp"
+            android:elevation="16dp"
             android:backgroundTint="@color/colorPrimary"
+            android:scaleType="center"
             app:srcCompat="@drawable/add"
-            app:fabSize="normal"/>
+            app:fabCustomSize="75dp"
+            app:maxImageSize="42dp"/>
 
     </FrameLayout>
 </LinearLayout>
