@@ -22,6 +22,7 @@
         android:layout_weight="8"
         android:fontFamily="@font/font_goodharu"
         android:text="example"
+        android:textColor="@color/regularText"
         android:textSize="24sp"
         android:gravity="center"
         android:background="@drawable/item_border"/>
