@@ -56,12 +56,14 @@ class MainActivity : AppCompatActivity() {
                     .setMessage("정말 삭제하시겠습니까?")
                 dialog.setPositiveButton("예") { dialog, which ->
                     viewModel!!.delete(bigListAdapter.getItemByPosition(position))
+                    Toast.makeText(this@MainActivity,"삭제되었습니다.",Toast.LENGTH_SHORT).show()
                 }
                 dialog.setNegativeButton("아니오") { dialog, which -> }
                 dialog.create().show()
             }
         })
 
+        //검색 기능 textWatcher를 통해 구현
         et_search.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
             }
