@@ -22,7 +22,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:fontFamily="@font/font_goodharu"
-            android:textColor="#686868"
+            android:textColor="@color/regularText"
             android:text="name"
             android:textSize="28sp"
             android:textStyle="bold"/>
@@ -53,7 +53,7 @@
             android:layout_height="match_parent"
             android:layout_margin="6dp"
             android:src="@drawable/addcart"
-            android:background="#82DD18"/>
+            android:background="@color/addCart"/>
     </LinearLayout>
 
     <LinearLayout
@@ -61,7 +61,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="16.5"
-        android:background="#FFFFFF"
         android:orientation="horizontal">
 
         <androidx.recyclerview.widget.RecyclerView

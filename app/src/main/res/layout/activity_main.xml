@@ -22,7 +22,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:fontFamily="@font/font_goodharu"
-            android:textColor="#000000"
+            android:textColor="@color/regularText"
             android:text="@string/app_name"
             android:textSize="32sp"
             android:textStyle="bold"/>
@@ -60,7 +60,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="16.5"
-        android:background="#FFFFFF"
         android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView
