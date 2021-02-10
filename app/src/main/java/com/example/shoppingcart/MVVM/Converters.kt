@@ -5,6 +5,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.util.*
 
+//arrayList <-> string을 위한 converter 정의
 object Converters {
     @TypeConverter
     @JvmStatic
@@ -12,7 +13,6 @@ object Converters {
         val listType = object : TypeToken<ArrayList<String?>?>() {}.type
         return Gson().fromJson(value, listType)
     }
-
     @TypeConverter
     @JvmStatic
     fun fromArrayList(list: ArrayList<String?>?): String {

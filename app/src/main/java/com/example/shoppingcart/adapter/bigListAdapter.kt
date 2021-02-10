@@ -14,21 +14,23 @@ import com.example.shoppingcart.item.bigList
 import kotlinx.android.synthetic.main.big_list.view.*
 import java.util.*
 
+//메인 액티비티에서 쇼핑리스트를 보여줄 리스트 어댑터, 검색 기능을 위해 Filterable 상속받음
 class bigListAdapter : RecyclerView.Adapter<bigListAdapter.CustomViewHolder>(),
     Filterable {
 
     //리사이클러뷰를 이루는 리스트 데이터를 저장하는 곳
     private var UfList: List<bigList>? = ArrayList()
     private var FList: List<bigList>? = ArrayList()
-    //뷰홀더가 만들어질 때 실행될 코드( *뷰홀더란? -> 리스트 항목 하나의 뷰를 만들고 보존하는 역할을 한다.)
+
+    //뷰홀더가 만들어질 때 실행될 코드(*뷰홀더란? -> 리스트 항목 하나의 뷰를 만들고 보존하는 역할을 한다.)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         val v: View = LayoutInflater.from(parent.context).inflate(R.layout.big_list, parent, false)
         return CustomViewHolder(v) //이 리사이클러뷰에서 customviewholder를 관리하는 뷰홀더가 된다.
     }
 
-    //리스트 항목 뷰를 뷰홀더와 결합하는 역할의 코드
+    //리스트 항목 뷰를 만들어진 뷰홀더와 결합하는 역할의 코드
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
-        //인덱스는 리스트인덱스+1, 타이틀은 제목을 가져옴
+        //아이템을 알맞게 가져옴
         holder.tv_title.text = FList?.get(position)?.getTitle()
         holder.tv_date.text = FList?.get(position)?.getDate()
         holder.itemView.getTag(position)
@@ -44,6 +46,7 @@ class bigListAdapter : RecyclerView.Adapter<bigListAdapter.CustomViewHolder>(),
             intent.putExtra("checkList", FList?.get(position)?.getList2())
             context.startActivity(intent)
         }
+        //iv_delete 클릭 시 삭제작업 요청됨
         holder.itemView.iv_delete.setOnClickListener {
             itemClickListener.onClick(it, position)
         }
@@ -66,7 +69,7 @@ class bigListAdapter : RecyclerView.Adapter<bigListAdapter.CustomViewHolder>(),
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 FList =
-                    if (constraint == null || constraint.length == 0)  //검색 창에 입력된 내용이 없을 시 전체 리스트 출력
+                    if (constraint == null || constraint.isEmpty())  //검색 창에 입력된 내용이 없을 시 전체 리스트 출력
                         UfList
                     else {
                         val filteringList: MutableList<bigList> = ArrayList<bigList>()
@@ -82,7 +85,6 @@ class bigListAdapter : RecyclerView.Adapter<bigListAdapter.CustomViewHolder>(),
                 filterResults.values = FList
                 return filterResults
             }
-
             //완성된 filterResults를 출력
             override fun publishResults(constraint: CharSequence, results: FilterResults) {
                 FList = results.values as ArrayList<bigList>

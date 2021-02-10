@@ -12,10 +12,12 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.shoppingcart.R
 import java.util.*
 
+//한 쇼핑리스트 내에서 아이템 목록을 담당할 어댑터
 class smallListAdapter : RecyclerView.Adapter<smallListAdapter.CustomViewHolder>() {
     var itemList : ArrayList<String>? = ArrayList()
     var checkList : ArrayList<String>? = ArrayList()
-
+    
+    //각 함수에 대한 세부 설명은 생략
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         val v: View = LayoutInflater.from(parent.context).inflate(R.layout.small_list, parent, false)
         return CustomViewHolder(v)
@@ -27,16 +29,15 @@ class smallListAdapter : RecyclerView.Adapter<smallListAdapter.CustomViewHolder>
             holder.cb_check.isChecked = checkList!![position] == "T"
  
             //체크에 따른 취소선 표시
-            if(holder.cb_check.isChecked == true)
+            if(holder.cb_check.isChecked)
                 holder.tv_name.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
             else
                 holder.tv_name.paintFlags = 0
 
-
-
+            //아이템 삭제와 체크 변화 시 이벤트 설정
             holder.iv_delete.setOnClickListener { delete(holder.adapterPosition) }
             holder.cb_check.setOnCheckedChangeListener { buttonView, isChecked ->
-                if (isChecked == true) {
+                if (isChecked) {
                     checkList!![position] = "T"
                     holder.tv_name.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
                 }
@@ -51,14 +52,16 @@ class smallListAdapter : RecyclerView.Adapter<smallListAdapter.CustomViewHolder>
     override fun getItemCount(): Int {
         return itemList?.size ?: 0
     }
-
+    
+    //아이템 추가, 기본적으로 체크는 false로 설정
     fun insert(s: String) {
         itemList?.add(s)
         checkList?.add("F")
         notifyDataSetChanged()
     }
-
-    fun delete(position: Int) {
+    
+    //아이템 삭제 설정
+    private fun delete(position: Int) {
         try {
             itemList?.removeAt(position)
             checkList?.removeAt(position)

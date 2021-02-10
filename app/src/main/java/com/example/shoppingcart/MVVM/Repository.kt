@@ -19,7 +19,8 @@ class Repository internal constructor(application: Context) {
     fun getAllBigList(): LiveData<List<bigList>> {
         return elements
     }
-
+    
+    //기본적인 삽입 이벤트 정의
     fun insert(bigList: bigList) {
         try {
             val thread = Thread { bigListDao.insert(bigList) }
@@ -28,6 +29,7 @@ class Repository internal constructor(application: Context) {
         }
     }
 
+    //기본적인 삭제 이벤트 정의
     fun delete(bigList: bigList) {
         try {
             val thread = Thread { bigListDao.delete(bigList) }
