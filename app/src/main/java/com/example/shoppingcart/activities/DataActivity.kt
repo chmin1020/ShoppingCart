@@ -1,9 +1,7 @@
 package com.example.shoppingcart.activities
 
 import android.app.AlertDialog
-import android.app.Dialog
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -29,15 +27,16 @@ class DataActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_data)
 
+        //리사이클러뷰의 어댑터 및 레이아웃 설정
         spList.adapter = smallListAdapter
         spList.layoutManager = LinearLayoutManager(this)
 
         //뷰모델 설정(내부 데이터베이스를 효율적으로 활용하기 위함)
-        if (viewModelFactory == null) {
-            viewModelFactory = ViewModelProvider.AndroidViewModelFactory(this.getApplication())
-        }
+        if (viewModelFactory == null)
+            viewModelFactory = ViewModelProvider.AndroidViewModelFactory(this.application)
         viewModel = ViewModelProvider(this, viewModelFactory!!).get(roomViewModel::class.java)
 
+        //아이템 추가 시 클릭 이벤트
         ib_add.setOnClickListener {
             val tmp: String = et_item.text.toString()
             if (tmp != "") {
@@ -46,6 +45,7 @@ class DataActivity : AppCompatActivity() {
             }
         }
 
+        //내용 저장 시 이벤트
         btn_save.setOnClickListener{
             val date = Date(System.currentTimeMillis())
             val sdf = SimpleDateFormat("yyyy/MM/dd HH:mm")
@@ -63,6 +63,7 @@ class DataActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
+        //저장 버튼을 누르지 않고 뒤로 버튼을 눌렀을 시 저장하고 싶은지 여부 확인
         val dialog = AlertDialog.Builder(this).setTitle("").setMessage("저장하시겠습니까?")
         dialog.setPositiveButton("예"){dialog,which->
             val date = Date(System.currentTimeMillis())

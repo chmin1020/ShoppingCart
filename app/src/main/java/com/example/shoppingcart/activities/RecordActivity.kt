@@ -27,6 +27,7 @@ class RecordActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_record)
 
+        //리사이클러뷰 어댑터 및 레이아웃 설정
         spList.adapter = smallListAdapter
         spList.layoutManager = LinearLayoutManager(this)
 
@@ -38,7 +39,8 @@ class RecordActivity : AppCompatActivity(){
             this,
             viewModelFactory!!
         ).get<roomViewModel>(roomViewModel::class.java)
-
+        
+        //리사이클러뷰 내 어떤 아이템을 표시할 지 받아온 것을 불러옴
         val intent: Intent = intent
         id = intent.getIntExtra("id",-1)
         if(id==-1){
@@ -49,7 +51,7 @@ class RecordActivity : AppCompatActivity(){
         smallListAdapter.itemList = intent.getStringArrayListExtra("itemList")
         smallListAdapter.checkList= intent.getStringArrayListExtra("checkList")
 
-
+        //dataActivity와 마찬가지로 아이템 추가 클릭 이벤트 설정
         ib_add.setOnClickListener {
             val tmp: String = et_item.text.toString()
             if (tmp != "") {
@@ -60,6 +62,7 @@ class RecordActivity : AppCompatActivity(){
     }
 
     override fun onBackPressed() {
+        //recordActivity에서는 뒤로 버튼 시 자동 내용 갱신함
         super.onBackPressed()
         val date = Date(System.currentTimeMillis())
         val sdf = SimpleDateFormat("yyyy/MM/dd HH:mm")
