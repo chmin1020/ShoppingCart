@@ -1,11 +1,11 @@
-package com.example.shoppingcart.MVVM
+package com.fallTurtle.shoppingcart.MVVM
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.example.shoppingcart.item.bigList
+import com.fallTurtle.shoppingcart.item.bigList
 
 @Database(entities = [bigList::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)

@@ -1,4 +1,4 @@
-package com.example.shoppingcart.adapter
+package com.fallTurtle.shoppingcart.adapter
 
 import android.graphics.Paint
 import android.view.LayoutInflater
@@ -9,7 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.example.shoppingcart.R
+import com.fallTurtle.shoppingcart.R
 import java.util.*
 
 //한 쇼핑리스트 내에서 아이템 목록을 담당할 어댑터

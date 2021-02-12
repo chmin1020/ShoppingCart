@@ -1,8 +1,8 @@
-package com.example.shoppingcart.MVVM
+package com.fallTurtle.shoppingcart.MVVM
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.example.shoppingcart.item.bigList
+import com.fallTurtle.shoppingcart.item.bigList
 
 @Dao
 interface bigListDao {

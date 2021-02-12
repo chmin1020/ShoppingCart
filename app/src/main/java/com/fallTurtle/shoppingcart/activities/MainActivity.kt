@@ -1,4 +1,4 @@
-package com.example.shoppingcart.activities
+package com.fallTurtle.shoppingcart.activities
 
 import android.app.AlertDialog
 import android.content.Intent
@@ -12,10 +12,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.shoppingcart.MVVM.roomViewModel
-import com.example.shoppingcart.R
-import com.example.shoppingcart.adapter.bigListAdapter
-import com.example.shoppingcart.item.bigList
+import com.fallTurtle.shoppingcart.MVVM.roomViewModel
+import com.fallTurtle.shoppingcart.R
+import com.fallTurtle.shoppingcart.adapter.bigListAdapter
+import com.fallTurtle.shoppingcart.item.bigList
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {

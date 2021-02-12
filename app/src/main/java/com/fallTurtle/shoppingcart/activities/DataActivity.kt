@@ -1,4 +1,4 @@
-package com.example.shoppingcart.activities
+package com.fallTurtle.shoppingcart.activities
 
 import android.app.AlertDialog
 import android.os.Bundle
@@ -6,10 +6,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.shoppingcart.MVVM.roomViewModel
-import com.example.shoppingcart.R
-import com.example.shoppingcart.adapter.smallListAdapter
-import com.example.shoppingcart.item.bigList
+import com.fallTurtle.shoppingcart.MVVM.roomViewModel
+import com.fallTurtle.shoppingcart.R
+import com.fallTurtle.shoppingcart.adapter.smallListAdapter
+import com.fallTurtle.shoppingcart.item.bigList
 import kotlinx.android.synthetic.main.activity_data.*
 import kotlinx.android.synthetic.main.activity_data.ib_add
 import kotlinx.android.synthetic.main.activity_data.spList
@@ -21,7 +21,6 @@ class DataActivity : AppCompatActivity() {
     private var viewModel: roomViewModel? = null
     private var viewModelFactory: ViewModelProvider.AndroidViewModelFactory? = null
     private val smallListAdapter: smallListAdapter = smallListAdapter()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
