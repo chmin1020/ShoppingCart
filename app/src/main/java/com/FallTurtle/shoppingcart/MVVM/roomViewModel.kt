@@ -1,9 +1,9 @@
-package com.fallTurtle.shoppingcart.MVVM
+package com.FallTurtle.shoppingcart.MVVM
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import com.fallTurtle.shoppingcart.item.bigList
+import com.FallTurtle.shoppingcart.item.bigList
 
 class roomViewModel(application: Application) : AndroidViewModel(application) {
     private val repository: Repository = Repository(application.applicationContext)

@@ -1,4 +1,4 @@
-package com.fallTurtle.shoppingcart.activities
+package com.FallTurtle.shoppingcart.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,10 +6,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.fallTurtle.shoppingcart.MVVM.roomViewModel
-import com.fallTurtle.shoppingcart.R
-import com.fallTurtle.shoppingcart.adapter.smallListAdapter
-import com.fallTurtle.shoppingcart.item.bigList
+import com.FallTurtle.shoppingcart.MVVM.roomViewModel
+import com.FallTurtle.shoppingcart.R
+import com.FallTurtle.shoppingcart.adapter.smallListAdapter
+import com.FallTurtle.shoppingcart.item.bigList
 import kotlinx.android.synthetic.main.activity_record.*
 import java.text.SimpleDateFormat
 import java.util.*

@@ -1,4 +1,4 @@
-package com.fallTurtle.shoppingcart.MVVM
+package com.FallTurtle.shoppingcart.MVVM
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson

@@ -1,4 +1,4 @@
-package com.fallTurtle.shoppingcart.adapter
+package com.FallTurtle.shoppingcart.adapter
 
 import android.content.Intent
 import android.view.LayoutInflater
@@ -8,9 +8,9 @@ import android.widget.Filter
 import android.widget.Filterable
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.fallTurtle.shoppingcart.R
-import com.fallTurtle.shoppingcart.activities.RecordActivity
-import com.fallTurtle.shoppingcart.item.bigList
+import com.FallTurtle.shoppingcart.R
+import com.FallTurtle.shoppingcart.activities.RecordActivity
+import com.FallTurtle.shoppingcart.item.bigList
 import kotlinx.android.synthetic.main.big_list.view.*
 import java.util.*
 

@@ -1,4 +1,4 @@
-package com.fallTurtle.shoppingcart
+package com.FallTurtle.shoppingcart
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
