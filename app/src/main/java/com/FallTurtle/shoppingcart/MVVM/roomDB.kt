@@ -20,8 +20,7 @@ abstract class RoomDB : RoomDatabase() {
                     INSTANCE = Room.databaseBuilder(
                         context.applicationContext,
                         RoomDB::class.java, "RDB"
-                    ).fallbackToDestructiveMigration()
-                        .build()
+                    ).build()
                 }
             }
             return INSTANCE
