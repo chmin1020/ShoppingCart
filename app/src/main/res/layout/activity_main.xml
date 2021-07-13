@@ -39,7 +39,8 @@
             android:layout_width="60dp"
             android:layout_height="match_parent"
             android:layout_margin="4dp"
-            android:src="@drawable/search" />
+            android:src="@drawable/search"
+            android:contentDescription="@string/descript_search" />
 
         <EditText
             android:id="@+id/et_search"
@@ -51,7 +52,7 @@
             android:background="@drawable/box_border"
             android:fontFamily="@font/font_goodharu"
             android:textSize="12pt"
-            android:hint="검색" />
+            android:hint="@string/hint_search" />
 
     </LinearLayout>
 

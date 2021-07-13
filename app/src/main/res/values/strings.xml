@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">쇼핑 리스트</string>
+
+    <string name="hint_save">저장</string>
+    <string name="hint_list">목록 이름</string>
+    <string name="hint_insert">항목 입력</string>
+    <string name="hint_search">검색</string>
+
+    <string name="example">예시</string>
+    <string name="date_form">yyyy-mm-dd, hh-mm</string>
+
+    <string name="descript_addCart">새 리스트 생성</string>
+    <string name="descript_search">해당 항목 검색</string>
+    <string name="descript_delete">항목 삭제</string>
 </resources>

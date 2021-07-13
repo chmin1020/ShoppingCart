@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:weightSum="20"
     android:orientation="vertical">
 
@@ -23,7 +22,7 @@
             android:gravity="center"
             android:fontFamily="@font/font_goodharu"
             android:textColor="@color/regularText"
-            android:text="name"
+            android:text="@string/example"
             android:textSize="28sp"
             android:textStyle="bold"/>
 
@@ -45,7 +44,8 @@
             android:fontFamily="@font/font_goodharu"
             android:textSize="12pt"
             android:paddingHorizontal="8dp"
-            android:hint="항목 입력"/>
+            android:hint="@string/hint_insert"
+            />
 
         <ImageButton
             android:id="@+id/ib_add"
@@ -53,7 +53,8 @@
             android:layout_height="match_parent"
             android:layout_margin="6dp"
             android:src="@drawable/addcart"
-            android:background="@color/addCart"/>
+            android:background="@color/addCart"
+            android:contentDescription="@string/descript_addCart" />
     </LinearLayout>
 
     <LinearLayout
