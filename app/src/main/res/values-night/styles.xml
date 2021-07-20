@@ -6,12 +6,16 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="alertDialogStyle">@style/DialogStyle</item>
     </style>
 
-    <style name="CustomDialogTheme" parent="Theme.AppCompat.DayNight.Dialog.Alert">
-        <item name="android:textColor">#000000</item>
-        <item name="android:textColorPrimary">#000000</item>
-        <item name="android:colorAccent">#000000</item>
+    <style name="DialogStyle">
+        <item name="colorAccent">@color/colorPrimary</item>
     </style>
+
+    <style name="DialogButtonStyle">
+        <item name="backgroundTint">@color/colorPrimaryDark</item>
+    </style>
+
 
 </resources>
