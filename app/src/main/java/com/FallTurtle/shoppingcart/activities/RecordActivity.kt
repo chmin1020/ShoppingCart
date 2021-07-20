@@ -21,6 +21,9 @@ class RecordActivity : AppCompatActivity(){
     private var viewModelFactory: ViewModelProvider.AndroidViewModelFactory? = null
     private val smallListAdapter: smallListAdapter = smallListAdapter()
 
+    private var originIL: ArrayList<String>? = null
+    private var originCL: ArrayList<String>? = null
+
     private var id by Delegates.notNull<Int>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +41,7 @@ class RecordActivity : AppCompatActivity(){
         viewModel = ViewModelProvider(
             this,
             viewModelFactory!!
-        ).get<roomViewModel>(roomViewModel::class.java)
+        ).get(roomViewModel::class.java)
         
         //리사이클러뷰 내 어떤 아이템을 표시할 지 받아온 것을 불러옴
         val intent: Intent = intent
@@ -50,6 +53,10 @@ class RecordActivity : AppCompatActivity(){
         tv_title.text = intent.getStringExtra("title")
         smallListAdapter.itemList = intent.getStringArrayListExtra("itemList")
         smallListAdapter.checkList= intent.getStringArrayListExtra("checkList")
+
+        //변경된 사항 체크용 리스트 초기화화
+        originIL = smallListAdapter.itemList
+        originCL = smallListAdapter.checkList
 
         //dataActivity와 마찬가지로 아이템 추가 클릭 이벤트 설정
         ib_add.setOnClickListener {
@@ -64,6 +71,9 @@ class RecordActivity : AppCompatActivity(){
     override fun onBackPressed() {
         //recordActivity에서는 뒤로 버튼 시 자동 내용 갱신함
         super.onBackPressed()
+
+        if(originCL )
+
         val date = Date(System.currentTimeMillis())
         val sdf = SimpleDateFormat("yyyy/MM/dd HH:mm")
         val cur = sdf.format(date)
