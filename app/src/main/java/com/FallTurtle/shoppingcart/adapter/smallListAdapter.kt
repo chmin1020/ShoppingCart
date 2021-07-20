@@ -16,6 +16,7 @@ import java.util.*
 class smallListAdapter : RecyclerView.Adapter<smallListAdapter.CustomViewHolder>() {
     var itemList : ArrayList<String>? = ArrayList()
     var checkList : ArrayList<String>? = ArrayList()
+    var isChanged = false
     
     //각 함수에 대한 세부 설명은 생략
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
@@ -45,6 +46,7 @@ class smallListAdapter : RecyclerView.Adapter<smallListAdapter.CustomViewHolder>
                     checkList!![position] = "F"
                     holder.tv_name.paintFlags = 0
                 }
+                isChanged = true
             }
         }
     }
@@ -57,6 +59,7 @@ class smallListAdapter : RecyclerView.Adapter<smallListAdapter.CustomViewHolder>
     fun insert(s: String) {
         itemList?.add(s)
         checkList?.add("F")
+        isChanged = true
         notifyDataSetChanged()
     }
     
@@ -65,6 +68,7 @@ class smallListAdapter : RecyclerView.Adapter<smallListAdapter.CustomViewHolder>
         try {
             itemList?.removeAt(position)
             checkList?.removeAt(position)
+            isChanged = true
             notifyItemRemoved(position)
         } catch (e: IndexOutOfBoundsException) {
             e.printStackTrace()

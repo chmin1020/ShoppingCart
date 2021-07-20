@@ -2,6 +2,7 @@ package com.FallTurtle.shoppingcart.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -20,9 +21,6 @@ class RecordActivity : AppCompatActivity(){
     private var viewModel: roomViewModel? = null
     private var viewModelFactory: ViewModelProvider.AndroidViewModelFactory? = null
     private val smallListAdapter: smallListAdapter = smallListAdapter()
-
-    private var originIL: ArrayList<String>? = null
-    private var originCL: ArrayList<String>? = null
 
     private var id by Delegates.notNull<Int>()
 
@@ -54,10 +52,6 @@ class RecordActivity : AppCompatActivity(){
         smallListAdapter.itemList = intent.getStringArrayListExtra("itemList")
         smallListAdapter.checkList= intent.getStringArrayListExtra("checkList")
 
-        //변경된 사항 체크용 리스트 초기화화
-        originIL = smallListAdapter.itemList
-        originCL = smallListAdapter.checkList
-
         //dataActivity와 마찬가지로 아이템 추가 클릭 이벤트 설정
         ib_add.setOnClickListener {
             val tmp: String = et_item.text.toString()
@@ -72,16 +66,21 @@ class RecordActivity : AppCompatActivity(){
         //recordActivity에서는 뒤로 버튼 시 자동 내용 갱신함
         super.onBackPressed()
 
-        if(originCL )
+        if(smallListAdapter.isChanged) {
+            val date = Date(System.currentTimeMillis())
+            val sdf = SimpleDateFormat("yyyy/MM/dd HH:mm")
+            val cur = sdf.format(date)
+            val list = bigList(
+                tv_title.text.toString(),
+                cur,
+                smallListAdapter.itemList,
+                smallListAdapter.checkList
+            )
+            list.setId(id)
 
-        val date = Date(System.currentTimeMillis())
-        val sdf = SimpleDateFormat("yyyy/MM/dd HH:mm")
-        val cur = sdf.format(date)
-        val list = bigList(tv_title.text.toString(),cur,smallListAdapter.itemList,smallListAdapter.checkList)
-        list.setId(id)
-
-        viewModel!!.insert(list)
-        Toast.makeText(this, "저장되었습니다.", Toast.LENGTH_SHORT).show()
+            viewModel!!.insert(list)
+            Toast.makeText(this, "저장되었습니다.", Toast.LENGTH_SHORT).show()
+        }
         finish()
     }
 }
