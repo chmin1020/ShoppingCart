@@ -48,7 +48,7 @@ class bigListAdapter : RecyclerView.Adapter<bigListAdapter.CustomViewHolder>(),
         }
         //iv_delete 클릭 시 삭제작업 요청됨
         holder.itemView.iv_delete.setOnClickListener {
-            itemClickListener.onClick(it, position)
+            itemClickListener.onClicked(it, position)
         }
     }
 
@@ -95,7 +95,7 @@ class bigListAdapter : RecyclerView.Adapter<bigListAdapter.CustomViewHolder>(),
     
     //삭제 버튼 동작을 위한 클릭 리스너 인터페이스
     interface OnItemClickListener {
-        fun onClick(v: View, position: Int)
+        fun onClicked(v: View, position: Int)
     }
     private lateinit var itemClickListener : OnItemClickListener
     fun setItemClickListener(itemClickListener: OnItemClickListener) {

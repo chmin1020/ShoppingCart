@@ -55,6 +55,7 @@
         android:layout_weight="1.5"
         android:src="@drawable/delete"
         android:gravity="center"
+        android:padding="5dp"
         android:contentDescription="@string/descript_delete" />
 
 </LinearLayout>

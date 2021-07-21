@@ -6,16 +6,14 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="alertDialogStyle">@style/DialogStyle</item>
     </style>
 
-    <style name="DialogStyle">
-        <item name="colorAccent">@color/colorPrimary</item>
-        <item name="buttonBarButtonStyle">@style/DialogButtonStyle</item>
-    </style>
-
-    <style name="DialogButtonStyle">
+    <style name="customDialogButton">
+        <item name="android:textColor">@color/colorPrimaryDark</item>
         <item name="android:textSize">20sp</item>
-        <item name="backgroundTint">#ffffff</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginBottom">4dp</item>
+        <item name="android:layout_marginEnd">8dp</item>
     </style>
+
 </resources>

@@ -15,8 +15,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.FallTurtle.shoppingcart.MVVM.roomViewModel
 import com.FallTurtle.shoppingcart.R
 import com.FallTurtle.shoppingcart.adapter.bigListAdapter
+import com.FallTurtle.shoppingcart.item.CustomDialog
 import com.FallTurtle.shoppingcart.item.bigList
+import kotlinx.android.synthetic.main.activity_data.*
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.spList
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
     //database
@@ -51,16 +56,19 @@ class MainActivity : AppCompatActivity() {
 
         //리스트 아이템 내 삭제 버튼 클릭(adapter 커스텀 인터페이스 이용)
         bigListAdapter.setItemClickListener(object: bigListAdapter.OnItemClickListener {
-            override fun onClick(v: View, position: Int) {
-                //alertDialog 생성 및 설정
-                val dialog = AlertDialog.Builder(this@MainActivity).setTitle("")
-                    .setMessage("정말 삭제하시겠습니까?")
-                dialog.setPositiveButton("예") { dialog, which ->
-                    viewModel!!.delete(bigListAdapter.getItemByPosition(position))
-                    Toast.makeText(this@MainActivity,"삭제되었습니다.",Toast.LENGTH_SHORT).show()
-                }
-                dialog.setNegativeButton("아니오") { dialog, which -> }
-                dialog.create().show()
+            override fun onClicked(v: View, position: Int) {
+                val dialog = CustomDialog(this@MainActivity, "정말 삭제하시겠습니까?")
+
+                dialog.setOnPositiveClickListener(object : CustomDialog.ButtonClickListener {
+                    override fun onClicked() {
+                        viewModel!!.delete(bigListAdapter.getItemByPosition(position))
+                        Toast.makeText(this@MainActivity,"삭제되었습니다.",Toast.LENGTH_SHORT).show()
+                    }
+                })
+                dialog.setOnNegativeClickListener(object : CustomDialog.ButtonClickListener {
+                    override fun onClicked() {}
+                })
+                dialog.create()
             }
         })
 

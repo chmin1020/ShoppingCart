@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.FallTurtle.shoppingcart.MVVM.roomViewModel
 import com.FallTurtle.shoppingcart.R
 import com.FallTurtle.shoppingcart.adapter.smallListAdapter
+import com.FallTurtle.shoppingcart.item.CustomDialog
 import com.FallTurtle.shoppingcart.item.bigList
 import kotlinx.android.synthetic.main.activity_data.*
 import kotlinx.android.synthetic.main.activity_data.ib_add
@@ -45,7 +46,7 @@ class DataActivity : AppCompatActivity() {
         }
 
         //내용 저장 시 이벤트
-        btn_save.setOnClickListener{
+        btn_save.setOnClickListener {
             val date = Date(System.currentTimeMillis())
             val sdf = SimpleDateFormat("yyyy/MM/dd HH:mm")
             val cur = sdf.format(date)
@@ -62,23 +63,31 @@ class DataActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        //저장 버튼을 누르지 않고 뒤로 버튼을 눌렀을 시 저장하고 싶은지 여부 확인
-        val dialog = AlertDialog.Builder(this).setTitle("").setMessage("저장하시겠습니까?")
-        dialog.setPositiveButton("예"){dialog,which->
-            val date = Date(System.currentTimeMillis())
-            val sdf = SimpleDateFormat("yyyy/MM/dd HH:mm")
-            val cur = sdf.format(date)
+        val dialog = CustomDialog(this, "저장하시겠습니까?")
 
-            viewModel!!.insert(
-                bigList(
-                    et_title.text.toString(), cur,
-                    smallListAdapter.itemList, smallListAdapter.checkList
+        dialog.setOnPositiveClickListener(object : CustomDialog.ButtonClickListener {
+            override fun onClicked() {
+                val date = Date(System.currentTimeMillis())
+                val sdf = SimpleDateFormat("yyyy/MM/dd HH:mm")
+                val cur = sdf.format(date)
+
+                viewModel!!.insert(
+                    bigList(
+                        et_title.text.toString(), cur,
+                        smallListAdapter.itemList, smallListAdapter.checkList
+                    )
                 )
-            )
-            Toast.makeText(this, "저장되었습니다.", Toast.LENGTH_SHORT).show()
-            finish()
-        }
-        dialog.setNegativeButton("아니오"){dialog,which-> finish()}
-        dialog.create().show()
+                Toast.makeText(this@DataActivity, "저장되었습니다.", Toast.LENGTH_SHORT).show()
+                finish()
+            }
+        })
+        dialog.setOnNegativeClickListener(object : CustomDialog.ButtonClickListener {
+            override fun onClicked() {
+                Toast.makeText(this@DataActivity, "작성이 취소되었습니다.", Toast.LENGTH_SHORT).show()
+                finish()
+            }
+        })
+
+        dialog.create()
     }
 }
