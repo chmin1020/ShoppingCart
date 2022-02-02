@@ -2,17 +2,14 @@ package com.FallTurtle.shoppingcart.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.FallTurtle.shoppingcart.MVVM.roomViewModel
-import com.FallTurtle.shoppingcart.R
 import com.FallTurtle.shoppingcart.adapter.smallListAdapter
 import com.FallTurtle.shoppingcart.databinding.ActivityRecordBinding
 import com.FallTurtle.shoppingcart.item.bigList
-import kotlinx.android.synthetic.main.activity_record.*
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.properties.Delegates
