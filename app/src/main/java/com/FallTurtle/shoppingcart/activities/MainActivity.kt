@@ -1,6 +1,5 @@
 package com.FallTurtle.shoppingcart.activities
 
-import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -13,14 +12,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.FallTurtle.shoppingcart.MVVM.roomViewModel
-import com.FallTurtle.shoppingcart.R
 import com.FallTurtle.shoppingcart.adapter.bigListAdapter
+import com.FallTurtle.shoppingcart.databinding.ActivityMainBinding
 import com.FallTurtle.shoppingcart.item.CustomDialog
 import com.FallTurtle.shoppingcart.item.bigList
 import kotlinx.android.synthetic.main.activity_data.*
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.spList
-import java.text.SimpleDateFormat
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -29,13 +26,14 @@ class MainActivity : AppCompatActivity() {
     private var viewModelFactory: AndroidViewModelFactory? = null
     val bigListAdapter: bigListAdapter = bigListAdapter()
 
+    private lateinit var binding:ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-
-        spList.adapter = bigListAdapter
-        spList.layoutManager = LinearLayoutManager(this)
+        binding.spList.adapter = bigListAdapter
+        binding.spList.layoutManager = LinearLayoutManager(this)
 
         //뷰모델 설정(내부 데이터베이스를 효율적으로 활용하기 위함)
         if (viewModelFactory == null)
@@ -49,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         viewModel!!.getAllBigList().observe(this, listObserver)
 
         //새로운 쇼핑리스트 추가 버튼 클릭(fab)
-        fab_add.setOnClickListener {
+        binding.fabAdd.setOnClickListener {
             val intent = Intent(this, DataActivity::class.java)
             startActivity(intent)
         }

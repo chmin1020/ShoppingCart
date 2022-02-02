@@ -3,7 +3,6 @@ package com.FallTurtle.shoppingcart.item
 import android.app.Dialog
 import android.content.Context
 import android.view.WindowManager
-import android.widget.TextView
 import com.FallTurtle.shoppingcart.R
 import kotlinx.android.synthetic.main.custom_dialog.*
 

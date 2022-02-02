@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.FallTurtle.shoppingcart.MVVM.roomViewModel
 import com.FallTurtle.shoppingcart.R
 import com.FallTurtle.shoppingcart.adapter.smallListAdapter
+import com.FallTurtle.shoppingcart.databinding.ActivityRecordBinding
 import com.FallTurtle.shoppingcart.item.bigList
 import kotlinx.android.synthetic.main.activity_record.*
 import java.text.SimpleDateFormat
@@ -24,13 +25,15 @@ class RecordActivity : AppCompatActivity(){
 
     private var id by Delegates.notNull<Int>()
 
+    private lateinit var binding: ActivityRecordBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_record)
+        binding = ActivityRecordBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         //리사이클러뷰 어댑터 및 레이아웃 설정
-        spList.adapter = smallListAdapter
-        spList.layoutManager = LinearLayoutManager(this)
+        binding.spList.adapter = smallListAdapter
+        binding.spList.layoutManager = LinearLayoutManager(this)
 
         //뷰모델 설정(내부 데이터베이스를 효율적으로 활용하기 위함)
         if (viewModelFactory == null) {
@@ -48,16 +51,16 @@ class RecordActivity : AppCompatActivity(){
             Toast.makeText(this,"오류 발생",Toast.LENGTH_SHORT).show()
             finish()
         }
-        tv_title.text = intent.getStringExtra("title")
+        binding.tvTitle.text = intent.getStringExtra("title")
         smallListAdapter.itemList = intent.getStringArrayListExtra("itemList")
         smallListAdapter.checkList= intent.getStringArrayListExtra("checkList")
 
         //dataActivity와 마찬가지로 아이템 추가 클릭 이벤트 설정
-        ib_add.setOnClickListener {
-            val tmp: String = et_item.text.toString()
+        binding.ibAdd.setOnClickListener {
+            val tmp: String = binding.etItem.text.toString()
             if (tmp != "") {
                 smallListAdapter.insert(tmp)
-                et_item.text.clear()
+                binding.etItem.text.clear()
             }
         }
     }
@@ -71,7 +74,7 @@ class RecordActivity : AppCompatActivity(){
             val sdf = SimpleDateFormat("yyyy/MM/dd HH:mm")
             val cur = sdf.format(date)
             val list = bigList(
-                tv_title.text.toString(),
+                binding.tvTitle.text.toString(),
                 cur,
                 smallListAdapter.itemList,
                 smallListAdapter.checkList
