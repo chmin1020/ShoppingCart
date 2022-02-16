@@ -5,6 +5,7 @@
     <color name="colorAccent">#009106</color>
 
     <color name="smallList">#DFFFE0</color>
+    <color name="bigList">#C0FF78</color>
 
     <color name="addCart">#82DD18</color>
     <color name="saveBtn">#A6F14E</color>

@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         //리스트 아이템 내 삭제 버튼 클릭(adapter 커스텀 인터페이스 이용)
-        bigListAdapter.setItemClickListener(object: bigListAdapter.OnItemClickListener {
+        bigListAdapter.setItemLongClickListener(object: bigListAdapter.OnItemLongClickListener {
             override fun onClicked(v: View, position: Int) {
                 val dialog = CustomDialog(this@MainActivity, "정말 삭제하시겠습니까?")
 

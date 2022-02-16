@@ -47,8 +47,9 @@ class bigListAdapter : RecyclerView.Adapter<bigListAdapter.CustomViewHolder>(),
             context.startActivity(intent)
         }
         //iv_delete 클릭 시 삭제작업 요청됨
-        holder.itemView.iv_delete.setOnClickListener {
-            itemClickListener.onClicked(it, position)
+        holder.itemView.setOnLongClickListener { v ->
+            itemLongClickListener.onClicked(v, position)
+            true
         }
     }
 
@@ -94,12 +95,12 @@ class bigListAdapter : RecyclerView.Adapter<bigListAdapter.CustomViewHolder>(),
     }
     
     //삭제 버튼 동작을 위한 클릭 리스너 인터페이스
-    interface OnItemClickListener {
+    interface OnItemLongClickListener {
         fun onClicked(v: View, position: Int)
     }
-    private lateinit var itemClickListener : OnItemClickListener
-    fun setItemClickListener(itemClickListener: OnItemClickListener) {
-        this.itemClickListener = itemClickListener
+    private lateinit var itemLongClickListener : OnItemLongClickListener
+    fun setItemLongClickListener(itemLongClickListener: OnItemLongClickListener) {
+        this.itemLongClickListener = itemLongClickListener
     }
 
     //삭제를 위한 포지션에 따른 아이템 값 보내기 함수
