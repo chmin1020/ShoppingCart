@@ -8,43 +8,64 @@
     android:layout_marginVertical="4dp"
     android:clickable="true"
     android:focusable="true"
-    android:background="@drawable/list_border">
+    android:orientation="horizontal"
+    android:baselineAligned="false">
 
-    <TextView
-        android:id="@+id/tv_head"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="7.5"
-        android:weightSum="4"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/tv_title"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="3"
-            android:fontFamily="@font/font_goodharu"
-            android:text="@string/example"
-            android:textColor="@color/regularText"
-            android:textSize="24sp"
-            android:gravity="center"/>
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="8">
 
-        <TextView
-            android:id="@+id/tv_date"
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="7"/>
+
+            <ImageView
+                android:id="@+id/iv_delete"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/delete"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/swipe_view"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:fontFamily="@font/font_goodharu"
-            android:text="@string/date_form"
-            android:textColor="#A7000000"
-            android:textSize="16sp"
-            android:gravity="center"/>
-    </LinearLayout>
+            android:layout_height="match_parent"
+            android:weightSum="4"
+            android:background="@drawable/list_border"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="3"
+                android:fontFamily="@font/font_goodharu"
+                android:text="@string/example"
+                android:textColor="@color/regularText"
+                android:textSize="24sp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/tv_date"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/font_goodharu"
+                android:text="@string/date_form"
+                android:textColor="#A7000000"
+                android:textSize="16sp"
+                android:gravity="center"/>
+        </LinearLayout>
+    </FrameLayout>
 
 </LinearLayout>

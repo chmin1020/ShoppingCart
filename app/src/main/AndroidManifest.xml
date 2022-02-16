@@ -9,14 +9,20 @@
         android:roundIcon="@mipmap/app_icon_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.FallTurtle.shoppingcart.activities.MainActivity"  android:windowSoftInputMode="adjustNothing">
+        <activity android:name="com.FallTurtle.shoppingcart.activities.MainActivity"
+            android:windowSoftInputMode="adjustNothing"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.FallTurtle.shoppingcart.activities.DataActivity"  android:windowSoftInputMode="adjustNothing"/>
-        <activity android:name="com.FallTurtle.shoppingcart.activities.RecordActivity"  android:windowSoftInputMode="adjustNothing"/>
+        <activity android:name="com.FallTurtle.shoppingcart.activities.DataActivity"
+            android:windowSoftInputMode="adjustNothing"
+            android:exported="false"/>
+        <activity android:name="com.FallTurtle.shoppingcart.activities.RecordActivity"
+            android:windowSoftInputMode="adjustNothing"
+            android:exported="false"/>
     </application>
 
 </manifest>

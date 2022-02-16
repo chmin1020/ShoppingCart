@@ -10,11 +10,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.FallTurtle.shoppingcart.MVVM.roomViewModel
 import com.FallTurtle.shoppingcart.adapter.bigListAdapter
 import com.FallTurtle.shoppingcart.databinding.ActivityMainBinding
 import com.FallTurtle.shoppingcart.item.CustomDialog
+import com.FallTurtle.shoppingcart.item.SwipeHelperCallBack
 import com.FallTurtle.shoppingcart.item.bigList
 import kotlinx.android.synthetic.main.activity_data.*
 import kotlinx.android.synthetic.main.activity_main.*
@@ -52,15 +54,22 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        //리사이클러뷰에 스와이프, 드래그 기능
+        //val swipeCb = SwipeHelperCallBack(bigListAdapter)
+        val swipeCb = SwipeHelperCallBack(bigListAdapter).apply {
+            setClamp(resources.displayMetrics.widthPixels.toFloat() / 8)
+        }
+        ItemTouchHelper(swipeCb).attachToRecyclerView(binding.spList)
+
         //리스트 아이템 내 삭제 버튼 클릭(adapter 커스텀 인터페이스 이용)
-        bigListAdapter.setItemLongClickListener(object: bigListAdapter.OnItemLongClickListener {
+        swipeCb.bla.setItemClickListener(object : bigListAdapter.OnItemClickListener {
             override fun onClicked(v: View, position: Int) {
                 val dialog = CustomDialog(this@MainActivity, "정말 삭제하시겠습니까?")
 
                 dialog.setOnPositiveClickListener(object : CustomDialog.ButtonClickListener {
                     override fun onClicked() {
                         viewModel!!.delete(bigListAdapter.getItemByPosition(position))
-                        Toast.makeText(this@MainActivity,"삭제되었습니다.",Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@MainActivity, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
                     }
                 })
                 dialog.setOnNegativeClickListener(object : CustomDialog.ButtonClickListener {
