@@ -4,10 +4,6 @@
     <color name="colorPrimaryDark">#BDDD02</color>
     <color name="colorAccent">#009106</color>
 
-    <color name="bigList_head">#89FF00</color>
-    <color name="bigList_content">#B6FFB9</color>
-    <color name="bigList_date">#DDFFDE</color>
-
     <color name="smallList">#DFFFE0</color>
 
     <color name="addCart">#82DD18</color>
