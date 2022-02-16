@@ -35,7 +35,7 @@ class bigListAdapter : RecyclerView.Adapter<bigListAdapter.CustomViewHolder>(),
         holder.tv_date.text = FList?.get(position)?.getDate()
         holder.itemView.getTag(position)
 
-        holder.itemView.setOnClickListener { v -> //아이템을 누르면 인텐트를 통해 내용 확인 란으로 이동
+        holder.itemView.swipe_view.setOnClickListener { v -> //아이템을 누르면 인텐트를 통해 내용 확인 란으로 이동
             val context = v.context
             val intent = Intent(context, RecordActivity::class.java)
 
