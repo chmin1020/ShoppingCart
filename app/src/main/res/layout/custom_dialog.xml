@@ -30,6 +30,8 @@
             android:layout_height="wrap_content"
             android:text="@string/dialog_yes"
             android:textStyle="normal"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="30dp"
             style="@style/customDialogButton"/>
 
         <TextView
