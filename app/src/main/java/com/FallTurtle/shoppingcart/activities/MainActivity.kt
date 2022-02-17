@@ -51,6 +51,7 @@ class MainActivity : AppCompatActivity() {
         //새로운 쇼핑리스트 추가 버튼 클릭(fab)
         binding.fabAdd.setOnClickListener {
             val intent = Intent(this, DataActivity::class.java)
+            intent.putExtra("isEdit", false)
             startActivity(intent)
         }
 

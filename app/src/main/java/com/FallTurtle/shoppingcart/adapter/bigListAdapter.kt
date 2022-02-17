@@ -9,7 +9,7 @@ import android.widget.Filterable
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.FallTurtle.shoppingcart.R
-import com.FallTurtle.shoppingcart.activities.RecordActivity
+import com.FallTurtle.shoppingcart.activities.DataActivity
 import com.FallTurtle.shoppingcart.item.bigList
 import kotlinx.android.synthetic.main.big_list.view.*
 import java.util.*
@@ -37,8 +37,9 @@ class bigListAdapter : RecyclerView.Adapter<bigListAdapter.CustomViewHolder>(),
 
         holder.itemView.swipe_view.setOnClickListener { v -> //아이템을 누르면 인텐트를 통해 내용 확인 란으로 이동
             val context = v.context
-            val intent = Intent(context, RecordActivity::class.java)
+            val intent = Intent(context, DataActivity::class.java)
 
+            intent.putExtra("isEdit", true)
             intent.putExtra("id", FList?.get(position)?.getId())
             intent.putExtra("title", FList?.get(position)?.getTitle())
             intent.putExtra("date", FList?.get(position)?.getDate())

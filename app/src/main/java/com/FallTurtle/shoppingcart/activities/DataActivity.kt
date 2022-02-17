@@ -14,6 +14,11 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class DataActivity : AppCompatActivity() {
+    //edit
+    private var id:Int = -1
+    private var isEdit:Boolean = false
+    private var firstTitle:String = ""
+
     //database
     private var viewModel: roomViewModel? = null
     private var viewModelFactory: ViewModelProvider.AndroidViewModelFactory? = null
@@ -34,6 +39,20 @@ class DataActivity : AppCompatActivity() {
             viewModelFactory = ViewModelProvider.AndroidViewModelFactory(this.application)
         viewModel = ViewModelProvider(this, viewModelFactory!!).get(roomViewModel::class.java)
 
+        //edit 작업인지 확인
+        isEdit = intent.getBooleanExtra("isEdit", false)
+        if(isEdit){
+            id = intent.getIntExtra("id",-1)
+            if(id==-1) {
+                Toast.makeText(this, "오류 발생", Toast.LENGTH_SHORT).show()
+                finish()
+            }
+            binding.etTitle.setText(intent.getStringExtra("title"))
+            firstTitle = binding.etTitle.text.toString()
+            smallListAdapter.itemList = intent.getStringArrayListExtra("itemList")
+            smallListAdapter.checkList= intent.getStringArrayListExtra("checkList")
+        }
+
         //아이템 추가 시 클릭 이벤트
         binding.ibAdd.setOnClickListener {
             val tmp: String = binding.etItem.text.toString()
@@ -49,43 +68,49 @@ class DataActivity : AppCompatActivity() {
             val sdf = SimpleDateFormat("yyyy/MM/dd HH:mm")
             val cur = sdf.format(date)
 
-            viewModel!!.insert(
-                bigList(
-                    binding.etTitle.text.toString(), cur,
-                    smallListAdapter.itemList, smallListAdapter.checkList
-                )
+            val list = bigList(
+                binding.etTitle.text.toString(),
+                cur,
+                smallListAdapter.itemList,
+                smallListAdapter.checkList
             )
+            if(id != -1)
+                list.setId(id)
+            viewModel!!.insert(list)
             Toast.makeText(this, "저장되었습니다.", Toast.LENGTH_SHORT).show()
             finish()
         }
     }
 
     override fun onBackPressed() {
-        val dialog = CustomDialog(this, "저장하시겠습니까?")
-
-        dialog.setOnPositiveClickListener(object : CustomDialog.ButtonClickListener {
-            override fun onClicked() {
-                val date = Date(System.currentTimeMillis())
-                val sdf = SimpleDateFormat("yyyy/MM/dd HH:mm")
-                val cur = sdf.format(date)
-
-                viewModel!!.insert(
-                    bigList(
+        if (smallListAdapter.isChanged || firstTitle != binding.etTitle.text.toString()) {
+            val dialog = CustomDialog(this, "저장하시겠습니까?")
+            dialog.setOnPositiveClickListener(object : CustomDialog.ButtonClickListener {
+                override fun onClicked() {
+                    val date = Date(System.currentTimeMillis())
+                    val sdf = SimpleDateFormat("yyyy/MM/dd HH:mm")
+                    val cur = sdf.format(date)
+                    val list = bigList(
                         binding.etTitle.text.toString(), cur,
                         smallListAdapter.itemList, smallListAdapter.checkList
                     )
-                )
-                Toast.makeText(this@DataActivity, "저장되었습니다.", Toast.LENGTH_SHORT).show()
-                finish()
-            }
-        })
-        dialog.setOnNegativeClickListener(object : CustomDialog.ButtonClickListener {
-            override fun onClicked() {
-                Toast.makeText(this@DataActivity, "작성이 취소되었습니다.", Toast.LENGTH_SHORT).show()
-                finish()
-            }
-        })
+                    if (isEdit)
+                        list.setId(id)
 
-        dialog.create()
+                    viewModel!!.insert(list)
+                    Toast.makeText(this@DataActivity, "저장되었습니다.", Toast.LENGTH_SHORT).show()
+                    finish()
+                }
+            })
+            dialog.setOnNegativeClickListener(object : CustomDialog.ButtonClickListener {
+                override fun onClicked() {
+                    Toast.makeText(this@DataActivity, "취소되었습니다.", Toast.LENGTH_SHORT).show()
+                    finish()
+                }
+            })
+            dialog.create()
+        }
+        else
+            finish()
     }
 }
