@@ -55,14 +55,13 @@ class MainActivity : AppCompatActivity() {
         }
 
         //리사이클러뷰에 스와이프, 드래그 기능
-        //val swipeCb = SwipeHelperCallBack(bigListAdapter)
-        val swipeCb = SwipeHelperCallBack(bigListAdapter).apply {
+        val swipeCb = SwipeHelperCallBack().apply {
             setClamp(resources.displayMetrics.widthPixels.toFloat() / 8)
         }
         ItemTouchHelper(swipeCb).attachToRecyclerView(binding.spList)
 
         //리스트 아이템 내 삭제 버튼 클릭(adapter 커스텀 인터페이스 이용)
-        swipeCb.bla.setItemClickListener(object : bigListAdapter.OnItemClickListener {
+        bigListAdapter.setItemClickListener(object : bigListAdapter.OnItemClickListener {
             override fun onClicked(v: View, position: Int) {
                 val dialog = CustomDialog(this@MainActivity, "정말 삭제하시겠습니까?")
 
