@@ -4,9 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isInvisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory
@@ -45,6 +47,7 @@ class MainActivity : AppCompatActivity() {
         //LiveData와 observe를 통해 실시간 데이터 변화 감지 및 출력
         val listObserver = Observer<List<bigList>> {
             bigListAdapter.update(viewModel!!.getAllBigList().value)
+            decideDescription()
         }
         viewModel!!.getAllBigList().observe(this, listObserver)
 
@@ -87,6 +90,14 @@ class MainActivity : AppCompatActivity() {
                 bigListAdapter.filter.filter(et_search.text)
             }
         })
+    }
+
+    //설명 가릴까말까
+    private fun decideDescription(){
+        if(bigListAdapter.itemCount > 0)
+            binding.tvExplain.visibility = View.INVISIBLE
+        else
+            binding.tvExplain.visibility = View.VISIBLE
     }
 }
 

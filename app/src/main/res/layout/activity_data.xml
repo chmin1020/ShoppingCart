@@ -74,24 +74,22 @@
             android:layout_height="match_parent"
             android:layout_margin="6dp"
             android:src="@drawable/addcart"
-            android:background="@color/addCart"
+            android:background="@drawable/button_effect"
             android:contentDescription="@string/descript_addCart" />
 
     </LinearLayout>
 
-    <LinearLayout
+    <FrameLayout
         android:id="@+id/miniLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="12.5"
         android:orientation="horizontal">
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/spList"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-
-    </LinearLayout>
+    </FrameLayout>
 
     <Button
         android:id="@+id/btn_save"

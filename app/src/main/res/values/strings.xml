@@ -12,6 +12,7 @@
     <string name="descript_addCart">새 리스트 생성</string>
     <string name="descript_search">해당 항목 검색</string>
     <string name="descript_delete">항목 삭제</string>
+    <string name="descript_addfunction">+를 클릭하여 새 리스트를 추가하세요</string>
 
     <string name="dialog_yes">네</string>
     <string name="dialog_no">아니오</string>

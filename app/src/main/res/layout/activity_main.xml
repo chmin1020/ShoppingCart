@@ -81,5 +81,13 @@
             app:fabCustomSize="75dp"
             app:maxImageSize="42dp"/>
 
+        <TextView
+            android:id="@+id/tv_explain"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text= "@string/descript_addfunction"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:gravity="center"/>
     </FrameLayout>
 </LinearLayout>
