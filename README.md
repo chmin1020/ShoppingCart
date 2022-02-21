@@ -4,6 +4,8 @@
 <p>주요 기능 -> 쇼핑리스트 저장 / 수정/ 삭제, 각 아이템 체크 및 해제</p>
 <p style="background-color:green;">RecyclerView와 Room Database 활용, 코틀린 코드 자체는 조잡한 면이 있어 추후 보완 예정</p>
 
+https://play.google.com/store/apps/details?id=com.FallTurtle.shoppingcart
+
 <br>
 
 <h3>앱 예시 이미지1</h3>
