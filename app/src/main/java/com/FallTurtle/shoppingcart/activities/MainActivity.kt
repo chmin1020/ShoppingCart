@@ -20,8 +20,6 @@ import com.FallTurtle.shoppingcart.databinding.ActivityMainBinding
 import com.FallTurtle.shoppingcart.item.CustomDialog
 import com.FallTurtle.shoppingcart.item.SwipeHelperCallBack
 import com.FallTurtle.shoppingcart.item.bigList
-import kotlinx.android.synthetic.main.activity_data.*
-import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -83,11 +81,11 @@ class MainActivity : AppCompatActivity() {
         })
 
         //검색 기능 textWatcher를 통해 구현
-        et_search.addTextChangedListener(object : TextWatcher {
+        binding.etSearch.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {}
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                bigListAdapter.filter.filter(et_search.text)
+                bigListAdapter.filter.filter(binding.etSearch.text)
             }
         })
     }

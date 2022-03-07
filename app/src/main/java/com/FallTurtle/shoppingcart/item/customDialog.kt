@@ -3,8 +3,9 @@ package com.FallTurtle.shoppingcart.item
 import android.app.Dialog
 import android.content.Context
 import android.view.WindowManager
+import android.widget.TextView
 import com.FallTurtle.shoppingcart.R
-import kotlinx.android.synthetic.main.custom_dialog.*
+import com.FallTurtle.shoppingcart.databinding.CustomDialogBinding
 
 class CustomDialog(context : Context, message : String) {
     private val dialog = Dialog(context)
@@ -16,7 +17,12 @@ class CustomDialog(context : Context, message : String) {
         fun onClicked()
     }
     fun create(){
+
         dialog.setContentView(R.layout.custom_dialog)
+
+        val tvMessage = dialog.findViewById<TextView>(R.id.tv_message)
+        val tvYes = dialog.findViewById<TextView>(R.id.tv_yes)
+        val tvNo = dialog.findViewById<TextView>(R.id.tv_no)
 
         //다이얼로그 크기 및 취소 설정
         dialog.window!!.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
@@ -24,14 +30,14 @@ class CustomDialog(context : Context, message : String) {
         dialog.setCancelable(true)
 
         //다이얼로그 메시지 설정
-        dialog.tv_message.text = msg
+        tvMessage.text = msg
 
         //각 버튼 리스너 설정
-        dialog.tv_yes.setOnClickListener{
+        tvYes.setOnClickListener{
             onPositiveClickListener.onClicked()
             dialog.dismiss()
         }
-        dialog.tv_no.setOnClickListener{
+        tvNo.setOnClickListener{
             onNegativeClickListener.onClicked()
             dialog.dismiss()
         }

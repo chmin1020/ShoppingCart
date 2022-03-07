@@ -4,14 +4,11 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Filter
-import android.widget.Filterable
-import android.widget.TextView
+import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.FallTurtle.shoppingcart.R
 import com.FallTurtle.shoppingcart.activities.DataActivity
 import com.FallTurtle.shoppingcart.item.bigList
-import kotlinx.android.synthetic.main.big_list.view.*
 import java.util.*
 
 //메인 액티비티에서 쇼핑리스트를 보여줄 리스트 어댑터, 검색 기능을 위해 Filterable 상속받음
@@ -35,7 +32,7 @@ class bigListAdapter : RecyclerView.Adapter<bigListAdapter.CustomViewHolder>(),
         holder.tv_date.text = FList?.get(position)?.getDate()
         holder.itemView.getTag(position)
 
-        holder.itemView.swipe_view.setOnClickListener { v -> //아이템을 누르면 인텐트를 통해 내용 확인 란으로 이동
+        holder.swipeView.setOnClickListener { v -> //아이템을 누르면 인텐트를 통해 내용 확인 란으로 이동
             val context = v.context
             val intent = Intent(context, DataActivity::class.java)
 
@@ -49,7 +46,7 @@ class bigListAdapter : RecyclerView.Adapter<bigListAdapter.CustomViewHolder>(),
         }
 
         //iv_delete 클릭 시 삭제작업 요청됨
-        holder.itemView.iv_delete.setOnClickListener { v ->
+        holder.iv_delete.setOnClickListener { v ->
             itemClickListener.onClicked(v, position)
         }
     }
@@ -114,5 +111,7 @@ class bigListAdapter : RecyclerView.Adapter<bigListAdapter.CustomViewHolder>(),
         //menu_item.xml의 값들을 받아서 할당해준다.
         var tv_title: TextView = itemView.findViewById(R.id.tv_title)
         var tv_date: TextView = itemView.findViewById(R.id.tv_date)
+        var iv_delete: ImageView = itemView.findViewById(R.id.iv_delete)
+        var swipeView: LinearLayout = itemView.findViewById(R.id.swipe_view)
     }
 }
