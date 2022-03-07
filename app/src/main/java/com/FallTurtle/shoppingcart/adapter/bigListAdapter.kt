@@ -14,7 +14,7 @@ import java.util.*
 //메인 액티비티에서 쇼핑리스트를 보여줄 리스트 어댑터, 검색 기능을 위해 Filterable 상속받음
 class bigListAdapter : RecyclerView.Adapter<bigListAdapter.CustomViewHolder>(),
     Filterable {
-
+    /*추후 데이터 바인딩 시도 예정*/
     //리사이클러뷰를 이루는 리스트 데이터를 저장하는 곳
     private var UfList: List<bigList>? = ArrayList()
     private var FList: List<bigList>? = ArrayList()
