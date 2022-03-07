@@ -20,9 +20,6 @@
         <activity android:name="com.FallTurtle.shoppingcart.activities.DataActivity"
             android:windowSoftInputMode="adjustNothing"
             android:exported="false"/>
-        <activity android:name="com.FallTurtle.shoppingcart.activities.RecordActivity"
-            android:windowSoftInputMode="adjustNothing"
-            android:exported="false"/>
     </application>
 
 </manifest>
