@@ -13,7 +13,7 @@ import com.FallTurtle.shoppingcart.R
 import java.util.*
 
 //한 쇼핑리스트 내에서 아이템 목록을 담당할 어댑터
-class smallListAdapter : RecyclerView.Adapter<smallListAdapter.CustomViewHolder>() {
+class SmallListAdapter : RecyclerView.Adapter<SmallListAdapter.CustomViewHolder>() {
     var itemList : ArrayList<String>? = ArrayList()
     var checkList : ArrayList<String>? = ArrayList()
     var isChanged = false

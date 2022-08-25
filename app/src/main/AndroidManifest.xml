@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/app_icon_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.FallTurtle.shoppingcart.activities.MainActivity"
+        <activity android:name="com.FallTurtle.shoppingcart.activity.MainActivity"
             android:windowSoftInputMode="adjustNothing"
             android:exported="true">
             <intent-filter>
@@ -17,7 +17,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.FallTurtle.shoppingcart.activities.DataActivity"
+        <activity android:name="com.FallTurtle.shoppingcart.activity.DataActivity"
             android:windowSoftInputMode="adjustNothing"
             android:exported="false"/>
     </application>

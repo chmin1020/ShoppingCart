@@ -1,32 +1,29 @@
-package com.FallTurtle.shoppingcart.activities
+package com.FallTurtle.shoppingcart.activity
 
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isInvisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.FallTurtle.shoppingcart.MVVM.roomViewModel
-import com.FallTurtle.shoppingcart.adapter.bigListAdapter
+import com.FallTurtle.shoppingcart.MVVM.RoomViewModel
+import com.FallTurtle.shoppingcart.adapter.BigListAdapter
 import com.FallTurtle.shoppingcart.databinding.ActivityMainBinding
 import com.FallTurtle.shoppingcart.item.CustomDialog
 import com.FallTurtle.shoppingcart.item.SwipeHelperCallBack
-import com.FallTurtle.shoppingcart.item.bigList
-import java.util.*
+import com.FallTurtle.shoppingcart.item.BigList
 
 class MainActivity : AppCompatActivity() {
     //database
-    private var viewModel: roomViewModel? = null
+    private var viewModel: RoomViewModel? = null
     private var viewModelFactory: AndroidViewModelFactory? = null
-    val bigListAdapter: bigListAdapter = bigListAdapter()
+    val bigListAdapter: BigListAdapter = BigListAdapter()
 
     private lateinit var binding:ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,10 +37,10 @@ class MainActivity : AppCompatActivity() {
         //뷰모델 설정(내부 데이터베이스를 효율적으로 활용하기 위함)
         if (viewModelFactory == null)
             viewModelFactory = AndroidViewModelFactory(this.application)
-        viewModel = ViewModelProvider(this, viewModelFactory!!).get(roomViewModel::class.java)
+        viewModel = ViewModelProvider(this, viewModelFactory!!).get(RoomViewModel::class.java)
 
         //LiveData와 observe를 통해 실시간 데이터 변화 감지 및 출력
-        val listObserver = Observer<List<bigList>> {
+        val listObserver = Observer<List<BigList>> {
             bigListAdapter.update(viewModel!!.getAllBigList().value)
             decideDescription()
         }
@@ -63,7 +60,7 @@ class MainActivity : AppCompatActivity() {
         ItemTouchHelper(swipeCb).attachToRecyclerView(binding.spList)
 
         //리스트 아이템 내 삭제 버튼 클릭(adapter 커스텀 인터페이스 이용)
-        bigListAdapter.setItemClickListener(object : bigListAdapter.OnItemClickListener {
+        bigListAdapter.setItemClickListener(object : BigListAdapter.OnItemClickListener {
             override fun onClicked(v: View, position: Int) {
                 val dialog = CustomDialog(this@MainActivity, "정말 삭제하시겠습니까?")
 

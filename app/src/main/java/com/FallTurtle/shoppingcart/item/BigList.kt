@@ -4,7 +4,7 @@ import androidx.room.*
 import java.util.*
 
 @Entity //bigList 아이템을 room 데베에 저장하는 방식
-data class bigList(
+data class BigList(
     //리스트 제목, 최종 수정 날짜, 아이템 이름, 아이템 체크 여부
     private var title: String?,
     private var date: String?,

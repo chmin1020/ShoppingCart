@@ -7,16 +7,16 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.FallTurtle.shoppingcart.R
-import com.FallTurtle.shoppingcart.activities.DataActivity
-import com.FallTurtle.shoppingcart.item.bigList
+import com.FallTurtle.shoppingcart.activity.DataActivity
+import com.FallTurtle.shoppingcart.item.BigList
 import java.util.*
 
 //메인 액티비티에서 쇼핑리스트를 보여줄 리스트 어댑터, 검색 기능을 위해 Filterable 상속받음
-class bigListAdapter : RecyclerView.Adapter<bigListAdapter.CustomViewHolder>(),
+class BigListAdapter : RecyclerView.Adapter<BigListAdapter.CustomViewHolder>(),
     Filterable {
     //리사이클러뷰를 이루는 리스트 데이터를 저장하는 곳
-    private var UfList: List<bigList>? = ArrayList()
-    private var FList: List<bigList>? = ArrayList()
+    private var UfList: List<BigList>? = ArrayList()
+    private var FList: List<BigList>? = ArrayList()
 
     //뷰홀더가 만들어질 때 실행될 코드(*뷰홀더란? -> 리스트 항목 하나의 뷰를 만들고 보존하는 역할을 한다.)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
@@ -56,7 +56,7 @@ class bigListAdapter : RecyclerView.Adapter<bigListAdapter.CustomViewHolder>(),
     }
 
     //데이터베이스 값이 변경될 때마다 결과를 갱신해주기 위해 만든 메소드
-    fun update(list: List<bigList>?) {
+    fun update(list: List<BigList>?) {
         FList = list //바뀐 리스트를 받아와서
         UfList = list
         notifyDataSetChanged() //화면에서 갱신해준다
@@ -70,7 +70,7 @@ class bigListAdapter : RecyclerView.Adapter<bigListAdapter.CustomViewHolder>(),
                     if (constraint == null || constraint.isEmpty())  //검색 창에 입력된 내용이 없을 시 전체 리스트 출력
                         UfList
                     else {
-                        val filteringList: MutableList<bigList> = ArrayList<bigList>()
+                        val filteringList: MutableList<BigList> = ArrayList<BigList>()
                         val chk = constraint.toString().trim { it <= ' ' }
                         for (i in UfList?.indices!!) {  //필터되지 않은 전체 리스트에서 조건에 맞는 것만 filteringList에 추가
                             if (UfList?.get(i)?.getTitle()?.contains(chk)!!) {
@@ -85,7 +85,7 @@ class bigListAdapter : RecyclerView.Adapter<bigListAdapter.CustomViewHolder>(),
             }
             //완성된 filterResults를 출력
             override fun publishResults(constraint: CharSequence, results: FilterResults) {
-                FList = results.values as ArrayList<bigList>
+                FList = results.values as ArrayList<BigList>
                 notifyDataSetChanged()
             }
         }
@@ -101,7 +101,7 @@ class bigListAdapter : RecyclerView.Adapter<bigListAdapter.CustomViewHolder>(),
     }
 
     //삭제를 위한 포지션에 따른 아이템 값 보내기 함수
-    fun getItemByPosition(position: Int) : bigList{
+    fun getItemByPosition(position: Int) : BigList{
         return FList?.get(position)!!
     }
 

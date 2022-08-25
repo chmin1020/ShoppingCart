@@ -5,12 +5,12 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.FallTurtle.shoppingcart.item.bigList
+import com.FallTurtle.shoppingcart.item.BigList
 
-@Database(entities = [bigList::class], version = 1, exportSchema = false)
+@Database(entities = [BigList::class], version = 2, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class RoomDB : RoomDatabase() {
-    abstract fun bigListDao(): bigListDao //데이터베이스를 관리할 dao
+    abstract fun bigListDao(): BigListDao //데이터베이스를 관리할 dao
 
     companion object {
         private var INSTANCE: RoomDB? = null
@@ -20,7 +20,7 @@ abstract class RoomDB : RoomDatabase() {
                     INSTANCE = Room.databaseBuilder(
                         context.applicationContext,
                         RoomDB::class.java, "RDB"
-                    ).build()
+                    ).fallbackToDestructiveMigration().build()
                 }
             }
             return INSTANCE
