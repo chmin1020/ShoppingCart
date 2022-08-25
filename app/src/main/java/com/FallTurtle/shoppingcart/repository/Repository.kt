@@ -1,15 +1,18 @@
-package com.FallTurtle.shoppingcart.MVVM
+package com.FallTurtle.shoppingcart.repository
 
 import android.content.Context
 import androidx.lifecycle.LiveData
-import com.FallTurtle.shoppingcart.item.BigList
+import com.FallTurtle.shoppingcart.model.BigList
+import com.FallTurtle.shoppingcart.model.BigListDao
+import com.FallTurtle.shoppingcart.model.RoomDB
 
 class Repository internal constructor(application: Context) {
+    //room DB 관련 인스턴스 (DB, DAO, elements)
     private val database: RoomDB = RoomDB.getDB(application)!!
     private val bigListDao: BigListDao = database.bigListDao()
     private val elements: LiveData<List<BigList>> = bigListDao.getAllBigList()
 
-    //view모델에서 db에 접근을 요청하면 실행될 함수
+    //뷰모델에서 db에 접근을 요청하면 실행될 함수
     fun getAllBigList(): LiveData<List<BigList>> {
         return elements
     }
@@ -19,7 +22,9 @@ class Repository internal constructor(application: Context) {
         try {
             val thread = Thread { bigListDao.insert(bigList) }
             thread.start()
-        } catch (e: Exception) {
+        }
+        catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
@@ -30,6 +35,7 @@ class Repository internal constructor(application: Context) {
             thread.start()
         }
         catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 }

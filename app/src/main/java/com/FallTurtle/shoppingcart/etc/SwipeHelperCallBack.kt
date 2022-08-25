@@ -1,4 +1,4 @@
-package com.FallTurtle.shoppingcart.item
+package com.FallTurtle.shoppingcart.etc
 
 import android.graphics.Canvas
 import android.view.View
@@ -7,9 +7,9 @@ import androidx.recyclerview.widget.ItemTouchHelper.*
 import androidx.recyclerview.widget.RecyclerView
 import com.FallTurtle.shoppingcart.R
 
-class SwipeHelperCallBack() : ItemTouchHelper.Callback(){
-    private var currentDx = 0f                  // 현재 x 값
-    private var clamp = 0f                      // 고정시킬 크기
+class SwipeHelperCallBack : ItemTouchHelper.Callback(){
+    private var currentDx = 0f // 현재 x 값
+    private var clamp = 0f  //고정시킬 크기
 
     // isClamped = true : 고정, false : 고정 해제
     private fun setTag(viewHolder: RecyclerView.ViewHolder, isClamped: Boolean) { viewHolder.itemView.tag = isClamped }

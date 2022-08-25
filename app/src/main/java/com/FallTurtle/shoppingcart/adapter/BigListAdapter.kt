@@ -8,7 +8,7 @@ import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.FallTurtle.shoppingcart.R
 import com.FallTurtle.shoppingcart.activity.DataActivity
-import com.FallTurtle.shoppingcart.item.BigList
+import com.FallTurtle.shoppingcart.model.BigList
 import java.util.*
 
 //메인 액티비티에서 쇼핑리스트를 보여줄 리스트 어댑터, 검색 기능을 위해 Filterable 상속받음
@@ -101,7 +101,7 @@ class BigListAdapter : RecyclerView.Adapter<BigListAdapter.CustomViewHolder>(),
     }
 
     //삭제를 위한 포지션에 따른 아이템 값 보내기 함수
-    fun getItemByPosition(position: Int) : BigList{
+    fun getItemByPosition(position: Int) : BigList {
         return FList?.get(position)!!
     }
 

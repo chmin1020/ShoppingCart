@@ -11,12 +11,12 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.FallTurtle.shoppingcart.MVVM.RoomViewModel
+import com.FallTurtle.shoppingcart.viewModel.ShoppingViewModel
 import com.FallTurtle.shoppingcart.adapter.BigListAdapter
 import com.FallTurtle.shoppingcart.databinding.ActivityMainBinding
-import com.FallTurtle.shoppingcart.item.CustomDialog
-import com.FallTurtle.shoppingcart.item.SwipeHelperCallBack
-import com.FallTurtle.shoppingcart.item.BigList
+import com.FallTurtle.shoppingcart.etc.CustomDialog
+import com.FallTurtle.shoppingcart.etc.SwipeHelperCallBack
+import com.FallTurtle.shoppingcart.model.BigList
 
 /**
  * 앱 첫 실행 시 나타나는 화면을 담당하는 액티비티.
@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
 
     //viewModel (뷰모델 팩토리, 뷰모델 )
     private val viewModelFactory by lazy{ ViewModelProvider.AndroidViewModelFactory(this.application) }
-    private val viewModel by lazy{ ViewModelProvider(this, viewModelFactory).get(RoomViewModel::class.java) }
+    private val viewModel by lazy{ ViewModelProvider(this, viewModelFactory).get(ShoppingViewModel::class.java) }
 
     //viewBinding
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }

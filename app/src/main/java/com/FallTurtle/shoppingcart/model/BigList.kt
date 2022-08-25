@@ -1,4 +1,4 @@
-package com.FallTurtle.shoppingcart.item
+package com.FallTurtle.shoppingcart.model
 
 import androidx.room.*
 import java.util.*

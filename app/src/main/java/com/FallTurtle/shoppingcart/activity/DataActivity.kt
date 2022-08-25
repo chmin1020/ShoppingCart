@@ -5,11 +5,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.FallTurtle.shoppingcart.MVVM.RoomViewModel
+import com.FallTurtle.shoppingcart.viewModel.ShoppingViewModel
 import com.FallTurtle.shoppingcart.adapter.SmallListAdapter
 import com.FallTurtle.shoppingcart.databinding.ActivityDataBinding
-import com.FallTurtle.shoppingcart.item.BigList
-import com.FallTurtle.shoppingcart.item.CustomDialog
+import com.FallTurtle.shoppingcart.model.BigList
+import com.FallTurtle.shoppingcart.etc.CustomDialog
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -25,7 +25,7 @@ class DataActivity : AppCompatActivity() {
 
     //viewModel (뷰모델 팩토리, 뷰모델 )
     private val viewModelFactory by lazy{ ViewModelProvider.AndroidViewModelFactory(this.application) }
-    private val viewModel by lazy{ ViewModelProvider(this, viewModelFactory).get(RoomViewModel::class.java) }
+    private val viewModel by lazy{ ViewModelProvider(this, viewModelFactory).get(ShoppingViewModel::class.java) }
 
     //viewBinding
     private val binding by lazy{ ActivityDataBinding.inflate(layoutInflater) }
@@ -109,7 +109,7 @@ class DataActivity : AppCompatActivity() {
         }
 
         //저장된 내용에서 제목을 가져와서 editText 수정하고 내용 임시 저장(추후 내용 수정 여부 파악을 위해)
-        firstTitle = binding.etTitle.text.toString()
+        firstTitle = intent.getStringExtra("title").toString()
         binding.etTitle.setText(firstTitle)
 
         //저장된 내용에서 쇼핑 아이템 이름과 체크 여부 리스트를 가져와서 리사이클러뷰(어댑터)에 적용
