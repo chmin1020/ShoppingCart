@@ -11,7 +11,9 @@ import com.FallTurtle.shoppingcart.R
 import com.FallTurtle.shoppingcart.databinding.SmallListBinding
 import java.util.*
 
-//한 쇼핑리스트 내에서 아이템 목록을 담당할 어댑터
+/**
+ * 각 데이터 추가 혹은 수정 화면의 아이템 리스트를 담당하는 어댑터.
+ */
 class SmallListAdapter : RecyclerView.Adapter<SmallListAdapter.CustomViewHolder>() {
     var itemList : ArrayList<String>? = ArrayList()
     var checkList : ArrayList<String>? = ArrayList()
@@ -21,7 +23,7 @@ class SmallListAdapter : RecyclerView.Adapter<SmallListAdapter.CustomViewHolder>
     // 커스텀 뷰홀더 클래스
     //
 
-    inner class CustomViewHolder internal constructor(private val binding: SmallListBinding) : ViewHolder(binding.root) {
+    class CustomViewHolder(private val binding: SmallListBinding) : ViewHolder(binding.root) {
         fun bind(name: String, isChecked: Boolean,
                  deleteListener: View.OnClickListener, checkListener: CompoundButton.OnCheckedChangeListener){
 

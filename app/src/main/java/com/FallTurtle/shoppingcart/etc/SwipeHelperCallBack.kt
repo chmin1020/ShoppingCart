@@ -7,6 +7,9 @@ import androidx.recyclerview.widget.ItemTouchHelper.*
 import androidx.recyclerview.widget.RecyclerView
 import com.FallTurtle.shoppingcart.R
 
+/**
+ * 쇼핑 리스트 항목들의 swipe 기능을 도와주는 helpers
+ */
 class SwipeHelperCallBack : ItemTouchHelper.Callback(){
     private var currentDx = 0f // 현재 x 값
     private var clamp = 0f  //고정시킬 크기

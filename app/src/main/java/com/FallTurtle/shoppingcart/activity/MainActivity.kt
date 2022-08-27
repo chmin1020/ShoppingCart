@@ -86,7 +86,7 @@ class MainActivity : AppCompatActivity() {
         ItemTouchHelper(swipeCb).attachToRecyclerView(binding.spList)
 
         //리스트 아이템 내 삭제 버튼 클릭(adapter 커스텀 인터페이스 이용)
-        bigListAdapter.setItemClickListener(object : BigListAdapter.OnItemClickListener {
+        bigListAdapter.setItemClickListener(object : BigListAdapter.OnDeleteImgClickListener {
             override fun onClicked(v: View, position: Int) {
                 showDialogForRemoving(position)
             }

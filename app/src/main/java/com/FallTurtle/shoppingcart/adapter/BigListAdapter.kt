@@ -8,6 +8,7 @@ import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.FallTurtle.shoppingcart.R
 import com.FallTurtle.shoppingcart.activity.DataActivity
+import com.FallTurtle.shoppingcart.databinding.BigListBinding
 import com.FallTurtle.shoppingcart.model.BigList
 import java.util.*
 
@@ -23,16 +24,42 @@ class BigListAdapter : RecyclerView.Adapter<BigListAdapter.CustomViewHolder>(),
 
 
     //--------------------------------------------
+    // 터치 이벤트를 위한 인터페이스와 관련 함수들
+    //
+
+    private lateinit var itemClickListener : OnDeleteImgClickListener
+
+    //삭제 버튼 동작을 위한 클릭 리스너 인터페이스
+    interface OnDeleteImgClickListener {
+        fun onClicked(v: View, position: Int)
+    }
+
+    fun setItemClickListener(itemLongClickListener: OnDeleteImgClickListener) {
+        this.itemClickListener = itemLongClickListener
+    }
+
+    //삭제를 위한 포지션에 따른 아이템 값 보내기 함수
+    fun getItemByPosition(position: Int) : BigList {
+        return filteredList?.get(position)!!
+    }
+
+
+    //--------------------------------------------
     // 커스텀 뷰홀더 클래스
     //
 
     //이 리사이클러에서 사용할 뷰홀더를 정의한 클래스
-    inner class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        //menu_item.xml의 값들을 받아서 할당해준다.
-        var tv_title: TextView = itemView.findViewById(R.id.tv_title)
-        var tv_date: TextView = itemView.findViewById(R.id.tv_date)
-        var iv_delete: ImageView = itemView.findViewById(R.id.iv_delete)
-        var swipeView: LinearLayout = itemView.findViewById(R.id.swipe_view)
+    inner class CustomViewHolder(private val binding: BigListBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(title: String, date: String,
+                 swipeListener: View.OnClickListener, deleteListener: View.OnClickListener){
+            //표시할 제목과 날짜 설정
+            binding.tvTitle.text = title
+            binding.tvDate.text = date
+
+            //swipe, delete 기능에 대한 이벤트 리스너 설정
+            binding.swipeView.setOnClickListener(swipeListener)
+            binding.ivDelete.setOnClickListener(deleteListener)
+        }
     }
 
 
@@ -42,18 +69,17 @@ class BigListAdapter : RecyclerView.Adapter<BigListAdapter.CustomViewHolder>(),
 
     //뷰홀더가 만들어질 때 실행될 코드(*뷰홀더란? -> 리스트 항목 하나의 뷰를 만들고 보존하는 역할을 한다.)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
-        val v: View = LayoutInflater.from(parent.context).inflate(R.layout.big_list, parent, false)
-        return CustomViewHolder(v) //이 리사이클러뷰에서 customviewholder를 관리하는 뷰홀더가 된다.
+        val itemView: View = LayoutInflater.from(parent.context).inflate(R.layout.big_list, parent, false)
+        return CustomViewHolder(BigListBinding.bind(itemView)) //이 리사이클러뷰에서 customviewholder를 관리하는 뷰홀더가 된다.
     }
 
     //리스트 항목 뷰를 만들어진 뷰홀더와 결합하는 역할의 코드
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         //아이템을 알맞게 가져옴
-        holder.tv_title.text = filteredList?.get(position)?.getTitle()
-        holder.tv_date.text = filteredList?.get(position)?.getDate()
-        holder.itemView.getTag(position)
+        val title = filteredList!![position].getTitle()!!
+        val date = filteredList!![position].getDate()!!
 
-        holder.swipeView.setOnClickListener { v -> //아이템을 누르면 인텐트를 통해 내용 확인 란으로 이동
+        val swipeListener = View.OnClickListener { v -> //아이템을 누르면 인텐트를 통해 내용 확인 란으로 이동
             val context = v.context
             val intent = Intent(context, DataActivity::class.java)
 
@@ -66,10 +92,9 @@ class BigListAdapter : RecyclerView.Adapter<BigListAdapter.CustomViewHolder>(),
             context.startActivity(intent)
         }
 
-        //iv_delete 클릭 시 삭제작업 요청됨
-        holder.iv_delete.setOnClickListener { v ->
-            itemClickListener.onClicked(v, position)
-        }
+        val deleteListener = View.OnClickListener{ itemClickListener.onClicked(it, position) }
+
+        holder.bind(title, date, swipeListener, deleteListener)
     }
 
     //어댑터가 가지고 있는 항목의 개수가 몇 개인지 알려주는 메소드
@@ -83,6 +108,7 @@ class BigListAdapter : RecyclerView.Adapter<BigListAdapter.CustomViewHolder>(),
         unFilteredList = list
         notifyDataSetChanged() //화면에서 갱신해준다
     }
+
 
     //--------------------------------------------
     // Filterable 인터페이스 오버라이딩 함수
@@ -117,19 +143,5 @@ class BigListAdapter : RecyclerView.Adapter<BigListAdapter.CustomViewHolder>(),
                 notifyDataSetChanged()
             }
         }
-    }
-    
-    //삭제 버튼 동작을 위한 클릭 리스너 인터페이스
-    interface OnItemClickListener {
-        fun onClicked(v: View, position: Int)
-    }
-    private lateinit var itemClickListener : OnItemClickListener
-    fun setItemClickListener(itemLongClickListener: OnItemClickListener) {
-        this.itemClickListener = itemLongClickListener
-    }
-
-    //삭제를 위한 포지션에 따른 아이템 값 보내기 함수
-    fun getItemByPosition(position: Int) : BigList {
-        return filteredList?.get(position)!!
     }
 }
