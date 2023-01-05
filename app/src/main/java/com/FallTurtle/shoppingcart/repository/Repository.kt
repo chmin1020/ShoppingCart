@@ -16,12 +16,12 @@ class Repository internal constructor(application: Context) {
     private val bigListDao: BigListDao = database.bigListDao()
     private val elements: LiveData<List<BigList>> = bigListDao.getAllBigList()
 
-    //뷰모델에서 db에 접근을 요청하면 실행될 함수
+    /* roomDB 내에서 리스트를 가져오는 작업을 정의한 함수 */
     fun roomGetList(): LiveData<List<BigList>> {
         return elements
     }
     
-    //기본적인 삽입 이벤트 정의
+    /* roomDB에 대한 기본적인 삽입 이벤트를 정의한 함수 */
     fun roomInsert(bigList: BigList) {
         try {
             val thread = Thread { bigListDao.insert(bigList) }
@@ -32,7 +32,7 @@ class Repository internal constructor(application: Context) {
         }
     }
 
-    //기본적인 삭제 이벤트 정의
+    /* roomDB에 대한 기본적인 삭제 이벤트를 정의한 함수 */
     fun roomDelete(bigList: BigList) {
         try {
             val thread = Thread { bigListDao.delete(bigList) }

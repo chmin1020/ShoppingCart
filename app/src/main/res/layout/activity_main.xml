@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:weightSum="20"
-    android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1.5"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme">
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/search_bar"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintHeight_percent="0.1">
 
         <TextView
             android:id="@+id/tv_title"
@@ -24,7 +25,7 @@
             android:fontFamily="@font/font_goodharu"
             android:textColor="@color/regularText"
             android:text="@string/app_name"
-            android:textSize="32sp"
+            android:textSize="30sp"
             android:textStyle="bold"/>
     </androidx.appcompat.widget.Toolbar>
 
@@ -33,19 +34,26 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="2"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintBottom_toTopOf="@id/miniLayout"
+        app:layout_constraintLeft_toLeftOf="@id/toolbar"
+        app:layout_constraintRight_toRightOf="@id/toolbar"
+        app:layout_constraintHeight_percent="0.1">
 
         <ImageView
-            android:layout_width="60dp"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:layout_margin="4dp"
             android:src="@drawable/search"
             android:contentDescription="@string/descript_search" />
 
         <EditText
             android:id="@+id/et_search"
-            android:layout_width="320dp"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="5"
             android:layout_marginHorizontal="4dp"
             android:layout_marginVertical="8dp"
             android:paddingHorizontal="8dp"
@@ -61,7 +69,11 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="16.5"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/search_bar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="@id/search_bar"
+        app:layout_constraintRight_toRightOf="@id/search_bar">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/spList"
@@ -74,12 +86,13 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="16dp"
-            android:elevation="16dp"
             android:backgroundTint="@color/colorPrimary"
+            android:elevation="16dp"
             android:scaleType="center"
-            app:srcCompat="@drawable/add"
             app:fabCustomSize="75dp"
-            app:maxImageSize="42dp"/>
+            app:maxImageSize="42dp"
+            app:srcCompat="@drawable/add"
+            android:contentDescription="@string/hint_add" />
 
         <TextView
             android:id="@+id/tv_explain"
@@ -90,4 +103,4 @@
             android:textSize="18sp"
             android:gravity="center"/>
     </FrameLayout>
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
