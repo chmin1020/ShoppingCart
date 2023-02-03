@@ -5,7 +5,7 @@
 <p style="background-color:green;">RecyclerView와 Room Database 활용, 코틀린 코드 자체는 조잡한 면이 있어 추후 보완 예정</p>
 
 
-[해당 앱 구글 플레이스토어 링크]https://play.google.com/store/apps/details?id=com.FallTurtle.shoppingcart
+[해당 앱 구글 플레이스토어 링크](https://play.google.com/store/apps/details?id=com.FallTurtle.shoppingcart)
 
 <br>
 
