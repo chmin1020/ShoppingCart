@@ -9,6 +9,7 @@
 
     <color name="addCart">#9DBF74</color>
     <color name="saveBtn">#CEE8B0</color>
+    <color name="cannotUse">#BCBCBC</color>
 
     <color name="regularText">#FFFFFF</color>
 </resources>

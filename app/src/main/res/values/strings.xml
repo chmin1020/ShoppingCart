@@ -6,6 +6,7 @@
     <string name="hint_insert">항목 입력</string>
     <string name="hint_search">검색</string>
     <string name="hint_add">항목 추가</string>
+    <string name="hint_delete">삭제</string>
 
     <string name="example">예시</string>
     <string name="date_form">yyyy-mm-dd, hh-mm</string>

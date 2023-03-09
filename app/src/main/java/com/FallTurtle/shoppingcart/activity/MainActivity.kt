@@ -10,13 +10,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.activity.viewModels
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.FallTurtle.shoppingcart.viewModel.ShoppingViewModel
 import com.FallTurtle.shoppingcart.adapter.CartAdapter
 import com.FallTurtle.shoppingcart.databinding.ActivityMainBinding
 import com.FallTurtle.shoppingcart.etc.CustomDialog
-import com.FallTurtle.shoppingcart.etc.SwipeHelperCallBack
 import com.FallTurtle.shoppingcart.model.Cart
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
@@ -65,7 +63,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        viewModel.getAllBigList()
+        viewModel.getAllCarts()
     }
 
 
@@ -82,18 +80,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        //리사이클러뷰에 스와이프, 드래그 기능을 추가
-        val swipeCb = SwipeHelperCallBack().apply {
-            setClamp(resources.displayMetrics.widthPixels.toFloat() / 8)
-        }
-        ItemTouchHelper(swipeCb).attachToRecyclerView(binding.spList)
-
-        //리스트 아이템 내 삭제 버튼 클릭(adapter 커스텀 인터페이스 이용)
-        cartAdapter.setItemClickListener(object : CartAdapter.OnDeleteImgClickListener {
-            override fun onClicked(v: View, position: Int) {
-                showDialogForRemoving(position)
-            }
-        })
 
         //검색 창에 내용 입력 시 이벤트 (내용 바뀔 때마다 TextWatcher 객체로 리스트에 필터링 적용)
         binding.etSearch.addTextChangedListener(object : TextWatcher {
@@ -103,31 +89,6 @@ class MainActivity : AppCompatActivity() {
                 cartAdapter.filter.filter(binding.etSearch.text)
             }
         })
-    }
-
-    /* 저장 여부를 묻는 다이얼로그를 생성해서 화면에 보여주는 함수 */
-    private fun showDialogForRemoving(position: Int){
-        //삭제 여부를 묻는 다이얼로그 생성
-        val dialog = CustomDialog(this@MainActivity, "정말 삭제하시겠습니까?")
-
-        //'네' 응답에 대한 처리 과정
-        dialog.setOnPositiveClickListener(object : CustomDialog.ButtonClickListener {
-            override fun onClicked() {
-                CoroutineScope(Dispatchers.IO).launch {
-                    viewModel.delete(cartAdapter.getItemByPosition(position))
-                    viewModel.getAllBigList()
-                    withContext(Dispatchers.Main){Toast.makeText(this@MainActivity, "삭제되었습니다.", Toast.LENGTH_SHORT).show() }
-                }
-            }
-        })
-
-        //'아니오' 응답에 대한 처리 과정
-        dialog.setOnNegativeClickListener(object : CustomDialog.ButtonClickListener {
-            override fun onClicked() {}
-        })
-
-        //생성하고 설정한 다이얼로그 화면에 출력
-        dialog.create()
     }
 
     /* 쇼핑 리스트에 아이템이 있냐 없냐에 따라 관련 설명 제공 여부를 결정하는 함수 */

@@ -1,5 +1,6 @@
 package com.FallTurtle.shoppingcart.activity
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -12,6 +13,10 @@ import com.FallTurtle.shoppingcart.databinding.ActivityDataBinding
 import com.FallTurtle.shoppingcart.model.Cart
 import com.FallTurtle.shoppingcart.etc.CustomDialog
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -45,13 +50,14 @@ class DataActivity : AppCompatActivity() {
     /* onCreate()에서는 리사이클러뷰, 모델을 통한 뷰 갱신 및 이벤트 리스너 설정을 수행 */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        //뷰 바인딩으로 화면 설정
         setContentView(binding.root)
 
         //리사이클러뷰의 어댑터 및 레이아웃 설정
         binding.spList.adapter = itemAdapter
         binding.spList.layoutManager = LinearLayoutManager(this)
+
+        //버튼 기본 비활성화
+        binding.btnDelete.isClickable = false
 
         //edit 작업인지 확인하고, 맞다면 edit 페이지 설정
         isEdit = intent.getBooleanExtra("isEdit", false)
@@ -95,7 +101,6 @@ class DataActivity : AppCompatActivity() {
 
     /* 기존 big 아이템 수정을 위해 페이지를 킨 경우, 기존 내용을 불러오는 함수 */
     private fun editPageSetting(){
-
         intent.getParcelableExtra<Cart>("cart")?.let {
             id = it.id
             if(id == -1) {
@@ -108,9 +113,17 @@ class DataActivity : AppCompatActivity() {
             binding.etTitle.setText(firstTitle)
 
             //저장된 내용에서 쇼핑 아이템 이름과 체크 여부 리스트를 가져와서 리사이클러뷰(어댑터)에 적용
-            Log.d("뚜뚜데이지3", it.items.joinToString(" "))
             itemAdapter.items.addAll(it.items)
+
+            //리스트 아이템 내 삭제 버튼 클릭(adapter 커스텀 인터페이스 이용)
+            binding.btnDelete.setOnClickListener {
+                showDialogForRemoving()
+            }
         }
+
+        //삭제 버튼 활성화
+        binding.btnDelete.isClickable = true
+        binding.btnDelete.setBackgroundColor(Color.parseColor("#CEE8B0"))
     }
 
     /* 내용을 room 데이터베이스에 저장하기 위한 함수 */
@@ -157,4 +170,30 @@ class DataActivity : AppCompatActivity() {
         //생성하고 설정한 다이얼로그 화면에 출력
         dialog.create()
     }
+
+    /* 저장 여부를 묻는 다이얼로그를 생성해서 화면에 보여주는 함수 */
+    private fun showDialogForRemoving(){
+        //삭제 여부를 묻는 다이얼로그 생성
+        val dialog = CustomDialog(this, "정말 삭제하시겠습니까?")
+
+        //'네' 응답에 대한 처리 과정
+        dialog.setOnPositiveClickListener(object : CustomDialog.ButtonClickListener {
+            override fun onClicked() {
+                CoroutineScope(Dispatchers.IO).launch {
+                    intent.getParcelableExtra<Cart>("cart")?.let { viewModel.delete(it) }
+                    withContext(Dispatchers.Main){Toast.makeText(this@DataActivity, "삭제되었습니다.", Toast.LENGTH_SHORT).show() }
+                    finish()
+                }
+            }
+        })
+
+        //'아니오' 응답에 대한 처리 과정
+        dialog.setOnNegativeClickListener(object : CustomDialog.ButtonClickListener {
+            override fun onClicked() {}
+        })
+
+        //생성하고 설정한 다이얼로그 화면에 출력
+        dialog.create()
+    }
+
 }

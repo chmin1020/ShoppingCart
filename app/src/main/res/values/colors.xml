@@ -8,7 +8,8 @@
     <color name="bigList">#C0FF78</color>
 
     <color name="addCart">#82DD18</color>
-    <color name="saveBtn">#A6F14E</color>
+    <color name="saveBtn">#CEE8B0</color>
+    <color name="cannotUse">#BCBCBC</color>
 
     <color name="regularText">#000000</color>
 </resources>

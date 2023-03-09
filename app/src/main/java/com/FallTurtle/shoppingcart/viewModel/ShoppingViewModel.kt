@@ -19,7 +19,7 @@ class ShoppingViewModel
     private val insideItems = MutableLiveData<List<Cart>>()
     val items: LiveData<List<Cart>> = insideItems
 
-    fun getAllBigList()  {
+    fun getAllCarts()  {
         viewModelScope.launch(Dispatchers.IO){
             insideItems.postValue(repository.getList())
         }
