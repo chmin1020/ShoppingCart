@@ -3,8 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/jeong/AndroidStudioProjects/ShoppingCart/app/src/main/res/drawable/box_border.xml" value="0.2425" />
+        <entry key="..\:/Users/jeong/AndroidStudioProjects/ShoppingCart/app/src/main/res/drawable/button_effect.xml" value="0.1735" />
+        <entry key="..\:/Users/jeong/AndroidStudioProjects/ShoppingCart/app/src/main/res/drawable/remove.xml" value="0.2425" />
         <entry key="..\:/Users/jeong/AndroidStudioProjects/ShoppingCart/app/src/main/res/layout/activity_data.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/jeong/AndroidStudioProjects/ShoppingCart/app/src/main/res/layout/activity_main.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/jeong/AndroidStudioProjects/ShoppingCart/app/src/main/res/mipmap-anydpi-v26/app_icon.xml" value="0.2425" />
       </map>
     </option>
   </component>

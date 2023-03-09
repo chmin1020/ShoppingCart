@@ -2,14 +2,15 @@ package com.FallTurtle.shoppingcart.activity
 
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.FallTurtle.shoppingcart.viewModel.ShoppingViewModel
 import com.FallTurtle.shoppingcart.adapter.SmallListAdapter
 import com.FallTurtle.shoppingcart.databinding.ActivityDataBinding
 import com.FallTurtle.shoppingcart.model.BigList
 import com.FallTurtle.shoppingcart.etc.CustomDialog
+import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -18,25 +19,17 @@ import java.util.*
  * 이 액티비티는 기존에 있는 내용을 수정하기 위해, 혹은 새로운 내용을 만들기 위해 실행된다.
  * 따라서 edit 여부를 판단하는 기능과 뷰에 작성된 내용을 저장하는 기능으로 이루어진다.
  */
+@AndroidEntryPoint
 class DataActivity : AppCompatActivity() {
-    //---------------------------------------
-    // 인스턴스 영역
-    //
-
-    //viewModel (뷰모델 팩토리, 뷰모델 )
-    private val viewModelFactory by lazy{ ViewModelProvider.AndroidViewModelFactory(this.application) }
-    private val viewModel by lazy{ ViewModelProvider(this, viewModelFactory).get(ShoppingViewModel::class.java) }
+    //viewModel
+    private val viewModel:ShoppingViewModel by viewModels()
 
     //viewBinding
     private val binding by lazy{ ActivityDataBinding.inflate(layoutInflater) }
 
-    //페이지 내부 쇼핑 아이템을 보여줄 리사이클러뷰의 어댑터
+    //세부 리사이클러뷰 어댑터
     private val smallListAdapter: SmallListAdapter = SmallListAdapter()
 
-
-    //---------------------------------------
-    // 변수 영역
-    //
 
     //페이지가 기존 아이템의 수정을 위해 실행되었을 경우 사용될 변수들
     private var isEdit:Boolean = false

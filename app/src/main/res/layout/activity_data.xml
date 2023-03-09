@@ -85,12 +85,12 @@
             android:id="@+id/ib_add"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:layout_margin="6dp"
-            android:src="@drawable/addcart"
+            android:layout_weight="1"
             android:background="@drawable/button_effect"
+            android:contentDescription="@string/descript_addCart"
             android:scaleType="center"
-            android:contentDescription="@string/descript_addCart" />
+            android:src="@drawable/addcart" />
 
     </LinearLayout>
 

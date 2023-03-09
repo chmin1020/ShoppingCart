@@ -8,7 +8,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.activity.viewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.FallTurtle.shoppingcart.viewModel.ShoppingViewModel
@@ -17,20 +17,16 @@ import com.FallTurtle.shoppingcart.databinding.ActivityMainBinding
 import com.FallTurtle.shoppingcart.etc.CustomDialog
 import com.FallTurtle.shoppingcart.etc.SwipeHelperCallBack
 import com.FallTurtle.shoppingcart.model.BigList
+import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * 앱 첫 실행 시 나타나는 화면을 담당하는 액티비티.
  * 이 액티비티에서는 쇼핑 리스트 확인, 검색, 삭제를 할 수 있고 이를 위한 이벤트 리스너를 사용한다.
  * 또한 각 쇼핑 리스트의 아이템들을 상세하게 확인 혹은 수정할 수 있도록 DataActivity 로 넘어가는 intent 객체를 사용한다.
  */
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-    //---------------------------------------
-    // 인스턴스 영역
-    //
-
-    //viewModel (뷰모델 팩토리, 뷰모델 )
-    private val viewModelFactory by lazy{ ViewModelProvider.AndroidViewModelFactory(this.application) }
-    private val viewModel by lazy{ ViewModelProvider(this, viewModelFactory).get(ShoppingViewModel::class.java) }
+    private val viewModel:ShoppingViewModel by viewModels()
 
     //viewBinding
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
