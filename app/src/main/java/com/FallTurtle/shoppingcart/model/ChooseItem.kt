@@ -5,6 +5,6 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class ChooseItem (
-    val checked: Boolean,
+    var checked: Boolean,
     val name: String
 ): Parcelable

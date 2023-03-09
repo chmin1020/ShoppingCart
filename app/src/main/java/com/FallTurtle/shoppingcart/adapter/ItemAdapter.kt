@@ -4,7 +4,6 @@ import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.FallTurtle.shoppingcart.R
@@ -22,23 +21,30 @@ class ItemAdapter : RecyclerView.Adapter<ItemAdapter.CustomViewHolder>() {
     // 커스텀 뷰홀더 클래스
     //
 
-    class CustomViewHolder(private val binding: SmallListBinding) : ViewHolder(binding.root) {
-        fun bind(item: ChooseItem,
-                 deleteListener: View.OnClickListener, checkListener: CompoundButton.OnCheckedChangeListener){
+    inner class CustomViewHolder(private val binding: SmallListBinding) : ViewHolder(binding.root) {
+        private var item: ChooseItem? = null
+        fun bind(item: ChooseItem){
+            this.item = item
 
-            //체크에 따른 취소선 표시
+            //체크에 따른 취소선 표시x
             checkSetting(item.checked)
 
             //표시할 이름과 체크 여부 설정
             binding.tvName.text = item.name
             binding.cbCheck.isChecked = item.checked
 
-            //check 버튼과 delete 이미지에 대한 이벤트 리스너 설정
-            binding.ivDelete.setOnClickListener(deleteListener)
-            binding.cbCheck.setOnCheckedChangeListener(checkListener)
+            //이벤트 리스너 설정
+            binding.ivDelete.setOnClickListener{
+                delete(item)
+                this.item = null
+            }
+            binding.cbCheck.setOnCheckedChangeListener { _, isChecked ->
+                this.item?.checked = isChecked
+                checkSetting(isChecked)
+            }
         }
 
-        fun checkSetting(isChecked: Boolean){
+        private fun checkSetting(isChecked: Boolean){
             if(isChecked)
                 binding.tvName.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
             else
@@ -56,13 +62,7 @@ class ItemAdapter : RecyclerView.Adapter<ItemAdapter.CustomViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
-        val deleteListener = View.OnClickListener{ delete(position) }
-        val checkListener = CompoundButton.OnCheckedChangeListener { _, isChecked ->
-            holder.checkSetting(isChecked)
-            isChanged = true
-        }
-
-        holder.bind(items[position], deleteListener, checkListener)
+        holder.bind(items[position])
     }
 
     override fun getItemCount(): Int {
@@ -82,11 +82,11 @@ class ItemAdapter : RecyclerView.Adapter<ItemAdapter.CustomViewHolder>() {
     }
     
     //아이템 삭제 설정
-    private fun delete(position: Int) {
+    private fun delete(item: ChooseItem) {
         try {
-            items.removeAt(position)
+            items.remove(item)
             isChanged = true
-            notifyItemRemoved(position)
+            notifyDataSetChanged()
         } catch (e: IndexOutOfBoundsException) {
             e.printStackTrace()
         }
