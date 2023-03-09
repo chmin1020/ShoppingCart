@@ -6,11 +6,11 @@ import androidx.room.*
 @Dao
 interface BigListDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(bigList: BigList)
+    suspend fun insert(bigList: BigList)
 
     @Delete
-    fun delete(bigList: BigList)
+    suspend fun delete(bigList: BigList)
 
     @Query("select * from BigList")
-    fun getAllBigList(): LiveData<List<BigList>>
+    suspend fun getAllBigList(): List<BigList>
 }

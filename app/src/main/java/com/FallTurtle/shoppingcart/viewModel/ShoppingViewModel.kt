@@ -1,10 +1,11 @@
 package com.FallTurtle.shoppingcart.viewModel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.FallTurtle.shoppingcart.repository.RoomDataRepository
 import com.FallTurtle.shoppingcart.model.BigList
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
@@ -15,18 +16,23 @@ import javax.inject.Inject
 class ShoppingViewModel
     @Inject constructor(private val repository: RoomDataRepository) : ViewModel() {
 
-    /* 룸 DB 리스트 데이터에 접근할 때 사용되는 함수 */
-    fun getAllBigList() : LiveData<List<BigList>> {
-        return repository.getList()
+    private val insideItems = MutableLiveData<List<BigList>>()
+    val items: LiveData<List<BigList>> = insideItems
+
+    fun getAllBigList()  {
+        viewModelScope.launch(Dispatchers.IO){
+            insideItems.postValue(repository.getList())
+        }
     }
 
-    /* 기본적인 룸 DB의 삽입 이벤트를 위한 함수 */
     fun insert(bigList: BigList) {
-        repository.insertData(bigList)
+        viewModelScope.launch(Dispatchers.IO){
+            repository.insertData(bigList)
+        }
     }
-
-    /* 기본적인 룸 DB의 삭제 이벤트를 위한 함수 */
-    fun delete(bigList: BigList) {
-        repository.deleteData(bigList)
+   fun delete(bigList: BigList) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteData(bigList)
+        }
     }
 }

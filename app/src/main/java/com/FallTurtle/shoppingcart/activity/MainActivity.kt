@@ -52,13 +52,18 @@ class MainActivity : AppCompatActivity() {
 
         //LiveData, observer 기능을 통해 실시간 쇼핑 리스트 데이터 변화 감지 및 출력
         val listObserver = Observer<List<BigList>> {
-            bigListAdapter.update(viewModel.getAllBigList().value)
+            bigListAdapter.update(it)
             decideShowingDescription() // 화면이 빈 경우(리스트 아이템이 0개인 경우) 설명이 보이게 한다.
         }
-        viewModel.getAllBigList().observe(this, listObserver)
+        viewModel.items.observe(this, listObserver)
 
         //클릭 이벤트 설정
         initListeners()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.getAllBigList()
     }
 
 

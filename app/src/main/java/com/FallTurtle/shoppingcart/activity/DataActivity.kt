@@ -118,11 +118,11 @@ class DataActivity : AppCompatActivity() {
 
         //내용을 저장 (제목, 이름과 체크 여부를 담은 리스트, 수정 중일 경우 id)
         val bigItem = BigList(
-            binding.etTitle.text.toString(), currentDate,
-            smallListAdapter.itemList, smallListAdapter.checkList
+            title = binding.etTitle.text.toString(), date = currentDate,
+            list = smallListAdapter.itemList, list2 = smallListAdapter.checkList
         )
         if(isEdit)
-            bigItem.setId(id)
+            bigItem.id = id
 
         //뷰모델을 통해 DB에 저장
         viewModel.insert(bigItem)

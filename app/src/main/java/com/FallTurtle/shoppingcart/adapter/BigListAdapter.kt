@@ -25,7 +25,6 @@ class BigListAdapter : RecyclerView.Adapter<BigListAdapter.CustomViewHolder>(),
 
     //--------------------------------------------
     // 터치 이벤트를 위한 인터페이스와 관련 함수들
-    //
 
     private lateinit var itemClickListener : OnDeleteImgClickListener
 
@@ -65,7 +64,6 @@ class BigListAdapter : RecyclerView.Adapter<BigListAdapter.CustomViewHolder>(),
 
     //--------------------------------------------
     // 리사이클러뷰 어댑터 오버라이딩 함수
-    //
 
     //뷰홀더가 만들어질 때 실행될 코드(*뷰홀더란? -> 리스트 항목 하나의 뷰를 만들고 보존하는 역할을 한다.)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
@@ -76,19 +74,19 @@ class BigListAdapter : RecyclerView.Adapter<BigListAdapter.CustomViewHolder>(),
     //리스트 항목 뷰를 만들어진 뷰홀더와 결합하는 역할의 코드
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         //아이템을 알맞게 가져옴
-        val title = filteredList!![position].getTitle()!!
-        val date = filteredList!![position].getDate()!!
+        val title = filteredList!![position].title ?: ""
+        val date = filteredList!![position].date ?: ""
 
         val swipeListener = View.OnClickListener { v -> //아이템을 누르면 인텐트를 통해 내용 확인 란으로 이동
             val context = v.context
             val intent = Intent(context, DataActivity::class.java)
 
             intent.putExtra("isEdit", true)
-            intent.putExtra("id", filteredList?.get(position)?.getId())
-            intent.putExtra("title", filteredList?.get(position)?.getTitle())
-            intent.putExtra("date", filteredList?.get(position)?.getDate())
-            intent.putExtra("itemList", filteredList?.get(position)?.getList())
-            intent.putExtra("checkList", filteredList?.get(position)?.getList2())
+            intent.putExtra("id", filteredList?.get(position)?.id)
+            intent.putExtra("title", filteredList?.get(position)?.title)
+            intent.putExtra("date", filteredList?.get(position)?.date)
+            intent.putExtra("itemList", filteredList?.get(position)?.list)
+            intent.putExtra("checkList", filteredList?.get(position)?.list2)
             context.startActivity(intent)
         }
 
@@ -112,7 +110,6 @@ class BigListAdapter : RecyclerView.Adapter<BigListAdapter.CustomViewHolder>(),
 
     //--------------------------------------------
     // Filterable 인터페이스 오버라이딩 함수
-    //
 
     //검색용 필터
     override fun getFilter(): Filter {
@@ -126,7 +123,7 @@ class BigListAdapter : RecyclerView.Adapter<BigListAdapter.CustomViewHolder>(),
                         val filteringList: MutableList<BigList> = ArrayList<BigList>()
                         val chk = constraint.toString().trim { it <= ' ' }
                         for (i in unFilteredList?.indices!!) {  //필터되지 않은 전체 리스트에서 조건에 맞는 것만 filteringList에 추가
-                            if (unFilteredList?.get(i)?.getTitle()?.contains(chk)!!) {
+                            if (unFilteredList?.get(i)?.title?.contains(chk)!!) {
                                 unFilteredList!![i].let { filteringList.add(it) }
                             }
                         }
