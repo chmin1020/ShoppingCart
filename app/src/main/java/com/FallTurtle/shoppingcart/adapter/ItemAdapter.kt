@@ -9,14 +9,13 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.FallTurtle.shoppingcart.R
 import com.FallTurtle.shoppingcart.databinding.SmallListBinding
-import java.util.*
+import com.FallTurtle.shoppingcart.model.ChooseItem
 
 /**
  * 각 데이터 추가 혹은 수정 화면의 아이템 리스트를 담당하는 어댑터.
  */
-class SmallListAdapter : RecyclerView.Adapter<SmallListAdapter.CustomViewHolder>() {
-    var itemList : ArrayList<String>? = ArrayList()
-    var checkList : ArrayList<String>? = ArrayList()
+class ItemAdapter : RecyclerView.Adapter<ItemAdapter.CustomViewHolder>() {
+    var items = mutableListOf<ChooseItem>()
     var isChanged = false
 
     //--------------------------------------------
@@ -24,15 +23,15 @@ class SmallListAdapter : RecyclerView.Adapter<SmallListAdapter.CustomViewHolder>
     //
 
     class CustomViewHolder(private val binding: SmallListBinding) : ViewHolder(binding.root) {
-        fun bind(name: String, isChecked: Boolean,
+        fun bind(item: ChooseItem,
                  deleteListener: View.OnClickListener, checkListener: CompoundButton.OnCheckedChangeListener){
 
             //체크에 따른 취소선 표시
-            checkSetting(isChecked)
+            checkSetting(item.checked)
 
             //표시할 이름과 체크 여부 설정
-            binding.tvName.text = name
-            binding.cbCheck.isChecked = isChecked
+            binding.tvName.text = item.name
+            binding.cbCheck.isChecked = item.checked
 
             //check 버튼과 delete 이미지에 대한 이벤트 리스너 설정
             binding.ivDelete.setOnClickListener(deleteListener)
@@ -58,16 +57,16 @@ class SmallListAdapter : RecyclerView.Adapter<SmallListAdapter.CustomViewHolder>
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         val deleteListener = View.OnClickListener{ delete(position) }
-        val checkListener = CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
+        val checkListener = CompoundButton.OnCheckedChangeListener { _, isChecked ->
             holder.checkSetting(isChecked)
             isChanged = true
         }
 
-        holder.bind(itemList!![position], (checkList!![position] == "T"), deleteListener, checkListener)
+        holder.bind(items[position], deleteListener, checkListener)
     }
 
     override fun getItemCount(): Int {
-        return itemList?.size ?: 0
+        return items.size
     }
 
 
@@ -77,8 +76,7 @@ class SmallListAdapter : RecyclerView.Adapter<SmallListAdapter.CustomViewHolder>
 
     //아이템 추가, 기본적으로 체크는 false로 설정
     fun insert(s: String) {
-        itemList?.add(s)
-        checkList?.add("F")
+        items.add(ChooseItem(false, s))
         isChanged = true
         notifyItemInserted(itemCount)
     }
@@ -86,8 +84,7 @@ class SmallListAdapter : RecyclerView.Adapter<SmallListAdapter.CustomViewHolder>
     //아이템 삭제 설정
     private fun delete(position: Int) {
         try {
-            itemList?.removeAt(position)
-            checkList?.removeAt(position)
+            items.removeAt(position)
             isChanged = true
             notifyItemRemoved(position)
         } catch (e: IndexOutOfBoundsException) {

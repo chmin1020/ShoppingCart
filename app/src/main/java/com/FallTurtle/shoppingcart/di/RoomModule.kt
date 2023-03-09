@@ -2,12 +2,11 @@ package com.FallTurtle.shoppingcart.di
 
 import android.content.Context
 import androidx.room.Room
-import com.FallTurtle.shoppingcart.model.BigListDao
+import com.FallTurtle.shoppingcart.model.CartDao
 import com.FallTurtle.shoppingcart.model.RoomDB
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
@@ -23,7 +22,7 @@ class RoomModule {
     }
 
     @Provides
-    fun provideBigListDao(roomDB: RoomDB): BigListDao{
+    fun provideBigListDao(roomDB: RoomDB): CartDao{
         return roomDB.bigListDao()
     }
 }

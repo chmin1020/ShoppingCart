@@ -1,14 +1,15 @@
 package com.FallTurtle.shoppingcart.activity
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.FallTurtle.shoppingcart.viewModel.ShoppingViewModel
-import com.FallTurtle.shoppingcart.adapter.SmallListAdapter
+import com.FallTurtle.shoppingcart.adapter.ItemAdapter
 import com.FallTurtle.shoppingcart.databinding.ActivityDataBinding
-import com.FallTurtle.shoppingcart.model.BigList
+import com.FallTurtle.shoppingcart.model.Cart
 import com.FallTurtle.shoppingcart.etc.CustomDialog
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
@@ -28,7 +29,7 @@ class DataActivity : AppCompatActivity() {
     private val binding by lazy{ ActivityDataBinding.inflate(layoutInflater) }
 
     //세부 리사이클러뷰 어댑터
-    private val smallListAdapter: SmallListAdapter = SmallListAdapter()
+    private val itemAdapter: ItemAdapter = ItemAdapter()
 
 
     //페이지가 기존 아이템의 수정을 위해 실행되었을 경우 사용될 변수들
@@ -49,7 +50,7 @@ class DataActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         //리사이클러뷰의 어댑터 및 레이아웃 설정
-        binding.spList.adapter = smallListAdapter
+        binding.spList.adapter = itemAdapter
         binding.spList.layoutManager = LinearLayoutManager(this)
 
         //edit 작업인지 확인하고, 맞다면 edit 페이지 설정
@@ -64,7 +65,7 @@ class DataActivity : AppCompatActivity() {
     /* onBackPressed()에는 뒤로 가기를 누른 경우에 판단 및 수행해야 하는 내용이 담김 */
     override fun onBackPressed() {
         //페이지 속 내용이 수정되었다면 dialog 띄워서 저장 여부를 확인하게 한다.
-        if (smallListAdapter.isChanged || firstTitle != binding.etTitle.text.toString())
+        if (itemAdapter.isChanged || firstTitle != binding.etTitle.text.toString())
             showDialogForChangedContents()
         else
             finish()
@@ -81,7 +82,7 @@ class DataActivity : AppCompatActivity() {
         binding.ibAdd.setOnClickListener {
             val tmp: String = binding.etItem.text.toString()
             if (tmp != "") {
-                smallListAdapter.insert(tmp)
+                itemAdapter.insert(tmp)
                 binding.etItem.text.clear()
             }
         }
@@ -94,20 +95,22 @@ class DataActivity : AppCompatActivity() {
 
     /* 기존 big 아이템 수정을 위해 페이지를 킨 경우, 기존 내용을 불러오는 함수 */
     private fun editPageSetting(){
-        //id를 가져온다. (가져오지 못한다면 오류로 간주)
-        id = intent.getIntExtra("id",-1)
-        if(id == -1) {
-            Toast.makeText(this, "오류 발생", Toast.LENGTH_SHORT).show()
-            finish()
+
+        intent.getParcelableExtra<Cart>("cart")?.let {
+            id = it.id
+            if(id == -1) {
+                Toast.makeText(this, "오류 발생", Toast.LENGTH_SHORT).show()
+                finish()
+            }
+
+            //저장된 내용에서 제목을 가져와서 editText 수정하고 내용 임시 저장(추후 내용 수정 여부 파악을 위해)
+            firstTitle = it.title
+            binding.etTitle.setText(firstTitle)
+
+            //저장된 내용에서 쇼핑 아이템 이름과 체크 여부 리스트를 가져와서 리사이클러뷰(어댑터)에 적용
+            Log.d("뚜뚜데이지3", it.items.joinToString(" "))
+            itemAdapter.items.addAll(it.items)
         }
-
-        //저장된 내용에서 제목을 가져와서 editText 수정하고 내용 임시 저장(추후 내용 수정 여부 파악을 위해)
-        firstTitle = intent.getStringExtra("title").toString()
-        binding.etTitle.setText(firstTitle)
-
-        //저장된 내용에서 쇼핑 아이템 이름과 체크 여부 리스트를 가져와서 리사이클러뷰(어댑터)에 적용
-        smallListAdapter.itemList = intent.getStringArrayListExtra("itemList")
-        smallListAdapter.checkList= intent.getStringArrayListExtra("checkList")
     }
 
     /* 내용을 room 데이터베이스에 저장하기 위한 함수 */
@@ -117,9 +120,8 @@ class DataActivity : AppCompatActivity() {
         val currentDate = dateFormat.format(Date(System.currentTimeMillis()))
 
         //내용을 저장 (제목, 이름과 체크 여부를 담은 리스트, 수정 중일 경우 id)
-        val bigItem = BigList(
-            title = binding.etTitle.text.toString(), date = currentDate,
-            list = smallListAdapter.itemList, list2 = smallListAdapter.checkList
+        val bigItem = Cart(
+            title = binding.etTitle.text.toString(), date = currentDate, items = itemAdapter.items
         )
         if(isEdit)
             bigItem.id = id

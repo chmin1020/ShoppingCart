@@ -9,18 +9,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.FallTurtle.shoppingcart.R
 import com.FallTurtle.shoppingcart.activity.DataActivity
 import com.FallTurtle.shoppingcart.databinding.BigListBinding
-import com.FallTurtle.shoppingcart.model.BigList
+import com.FallTurtle.shoppingcart.model.Cart
 import java.util.*
 
 /**
  * 메인 화면의 쇼핑 리스트를 담당하는 어댑터.
  * 이 어댑터는 Filterable 인터페이스를 구현해서 내용 검색이 가능하게 한다.
  */
-class BigListAdapter : RecyclerView.Adapter<BigListAdapter.CustomViewHolder>(),
+class CartAdapter : RecyclerView.Adapter<CartAdapter.CustomViewHolder>(),
     Filterable {
     //리사이클러뷰를 이루는 리스트 데이터를 저장하는 곳
-    private var unFilteredList: List<BigList>? = ArrayList()
-    private var filteredList: List<BigList>? = ArrayList()
+    private var unFilteredList: List<Cart> = mutableListOf()
+    private var filteredList: List<Cart> = mutableListOf()
 
 
     //--------------------------------------------
@@ -38,8 +38,8 @@ class BigListAdapter : RecyclerView.Adapter<BigListAdapter.CustomViewHolder>(),
     }
 
     //삭제를 위한 포지션에 따른 아이템 값 보내기 함수
-    fun getItemByPosition(position: Int) : BigList {
-        return filteredList?.get(position)!!
+    fun getItemByPosition(position: Int) : Cart {
+        return filteredList[position]
     }
 
 
@@ -74,19 +74,15 @@ class BigListAdapter : RecyclerView.Adapter<BigListAdapter.CustomViewHolder>(),
     //리스트 항목 뷰를 만들어진 뷰홀더와 결합하는 역할의 코드
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         //아이템을 알맞게 가져옴
-        val title = filteredList!![position].title ?: ""
-        val date = filteredList!![position].date ?: ""
+        val title = filteredList[position].title ?: ""
+        val date = filteredList[position].date ?: ""
 
         val swipeListener = View.OnClickListener { v -> //아이템을 누르면 인텐트를 통해 내용 확인 란으로 이동
             val context = v.context
-            val intent = Intent(context, DataActivity::class.java)
 
+            val intent = Intent(context, DataActivity::class.java)
             intent.putExtra("isEdit", true)
-            intent.putExtra("id", filteredList?.get(position)?.id)
-            intent.putExtra("title", filteredList?.get(position)?.title)
-            intent.putExtra("date", filteredList?.get(position)?.date)
-            intent.putExtra("itemList", filteredList?.get(position)?.list)
-            intent.putExtra("checkList", filteredList?.get(position)?.list2)
+            intent.putExtra("cart", filteredList[position])
             context.startActivity(intent)
         }
 
@@ -97,11 +93,11 @@ class BigListAdapter : RecyclerView.Adapter<BigListAdapter.CustomViewHolder>(),
 
     //어댑터가 가지고 있는 항목의 개수가 몇 개인지 알려주는 메소드
     override fun getItemCount(): Int {
-        return filteredList?.size ?: 0
+        return filteredList.size
     }
 
     //데이터베이스 값이 변경될 때마다 결과를 갱신해주기 위해 만든 메소드
-    fun update(list: List<BigList>?) {
+    fun update(list: List<Cart>) {
         filteredList = list //바뀐 리스트를 받아와서
         unFilteredList = list
         notifyDataSetChanged() //화면에서 갱신해준다
@@ -120,11 +116,11 @@ class BigListAdapter : RecyclerView.Adapter<BigListAdapter.CustomViewHolder>(),
                     if (constraint == null || constraint.isEmpty())  //검색 창에 입력된 내용이 없을 시 전체 리스트 출력
                         unFilteredList
                     else {
-                        val filteringList: MutableList<BigList> = ArrayList<BigList>()
+                        val filteringList: MutableList<Cart> = ArrayList<Cart>()
                         val chk = constraint.toString().trim { it <= ' ' }
-                        for (i in unFilteredList?.indices!!) {  //필터되지 않은 전체 리스트에서 조건에 맞는 것만 filteringList에 추가
-                            if (unFilteredList?.get(i)?.title?.contains(chk)!!) {
-                                unFilteredList!![i].let { filteringList.add(it) }
+                        for (i in unFilteredList.indices) {  //필터되지 않은 전체 리스트에서 조건에 맞는 것만 filteringList에 추가
+                            if (unFilteredList[i].title.contains(chk)) {
+                                unFilteredList[i].let { filteringList.add(it) }
                             }
                         }
                         filteringList
@@ -136,7 +132,7 @@ class BigListAdapter : RecyclerView.Adapter<BigListAdapter.CustomViewHolder>(),
 
             //완성된 filterResults를 출력
             override fun publishResults(constraint: CharSequence, results: FilterResults) {
-                filteredList = results.values as ArrayList<BigList>
+                filteredList = results.values as List<Cart>
                 notifyDataSetChanged()
             }
         }
