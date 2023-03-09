@@ -10,7 +10,6 @@ import com.FallTurtle.shoppingcart.R
 import com.FallTurtle.shoppingcart.activity.DataActivity
 import com.FallTurtle.shoppingcart.databinding.BigListBinding
 import com.FallTurtle.shoppingcart.model.Cart
-import java.util.*
 
 /**
  * 메인 화면의 쇼핑 리스트를 담당하는 어댑터.
@@ -22,34 +21,12 @@ class CartAdapter : RecyclerView.Adapter<CartAdapter.CustomViewHolder>(),
     private val unFilteredList = mutableListOf<Cart>()
     private val filteredList = mutableListOf<Cart>()
 
-
-    //--------------------------------------------
-    // 터치 이벤트를 위한 인터페이스와 관련 함수들
-
-    private lateinit var itemClickListener : OnDeleteImgClickListener
-
-    //삭제 버튼 동작을 위한 클릭 리스너 인터페이스
-    interface OnDeleteImgClickListener {
-        fun onClicked(v: View, position: Int)
-    }
-
-    fun setItemClickListener(itemLongClickListener: OnDeleteImgClickListener) {
-        this.itemClickListener = itemLongClickListener
-    }
-
-    //삭제를 위한 포지션에 따른 아이템 값 보내기 함수
-    fun getItemByPosition(position: Int) : Cart {
-        return filteredList[position]
-    }
-
-
     //--------------------------------------------
     // 커스텀 뷰홀더 클래스
-    //
 
     //이 리사이클러에서 사용할 뷰홀더를 정의한 클래스
     inner class CustomViewHolder(private val binding: BigListBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(cart: Cart, deleteListener: View.OnClickListener){
+        fun bind(cart: Cart){
             //표시할 제목과 날짜 설정
             binding.tvTitle.text = cart.title
             binding.tvDate.text = cart.date
@@ -60,10 +37,6 @@ class CartAdapter : RecyclerView.Adapter<CartAdapter.CustomViewHolder>(),
                 intent.putExtra("cart", filteredList[position])
                 it.context.startActivity(intent)
             }
-
-            //swipe, delete 기능에 대한 이벤트 리스너 설정
-            //binding.swipeView.setOnClickListener(swipeListener)
-            //binding.ivDelete.setOnClickListener(deleteListener)
         }
     }
 
@@ -74,18 +47,15 @@ class CartAdapter : RecyclerView.Adapter<CartAdapter.CustomViewHolder>(),
     //뷰홀더가 만들어질 때 실행될 코드(*뷰홀더란? -> 리스트 항목 하나의 뷰를 만들고 보존하는 역할을 한다.)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         val itemView: View = LayoutInflater.from(parent.context).inflate(R.layout.big_list, parent, false)
-        return CustomViewHolder(BigListBinding.bind(itemView)) //이 리사이클러뷰에서 customviewholder를 관리하는 뷰홀더가 된다.
+        return CustomViewHolder(BigListBinding.bind(itemView))
     }
 
     //리스트 항목 뷰를 만들어진 뷰홀더와 결합하는 역할의 코드
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
-        //아이템을 알맞게 가져옴
-        val deleteListener = View.OnClickListener{ itemClickListener.onClicked(it, position) }
-
-        holder.bind(filteredList[position], deleteListener)
+        holder.bind(filteredList[position])
     }
 
-    //어댑터가 가지고 있는 항목의 개수가 몇 개인지 알려주는 메소드
+    //어댑터가 가지고 있는 항목의 개수가 몇 개인지
     override fun getItemCount(): Int {
         return filteredList.size
     }
@@ -114,24 +84,15 @@ class CartAdapter : RecyclerView.Adapter<CartAdapter.CustomViewHolder>(),
                     if (constraint == null || constraint.isEmpty())  //검색 창에 입력된 내용이 없을 시 전체 리스트 출력
                         unFilteredList
                     else {
-                        val filteringList: MutableList<Cart> = ArrayList<Cart>()
                         val chk = constraint.toString().trim { it <= ' ' }
-                        for (i in unFilteredList.indices) {  //필터되지 않은 전체 리스트에서 조건에 맞는 것만 filteringList에 추가
-                            if (unFilteredList[i].title.contains(chk)) {
-                                unFilteredList[i].let { filteringList.add(it) }
-                            }
-                        }
-                        filteringList
+                        unFilteredList.filter { it.title.contains(chk) }
                     })
-                val filterResults = FilterResults()
-                filterResults.values = filteredList
-                return filterResults
+
+                return FilterResults().also { it.values = filteredList }
             }
 
             //완성된 filterResults를 출력
             override fun publishResults(constraint: CharSequence, results: FilterResults) {
-                filteredList.clear()
-                filteredList.addAll(results.values as List<Cart>)
                 notifyDataSetChanged()
             }
         }

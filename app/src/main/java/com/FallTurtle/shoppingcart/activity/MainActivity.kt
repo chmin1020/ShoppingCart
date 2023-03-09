@@ -6,7 +6,6 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.activity.viewModels
@@ -14,10 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.FallTurtle.shoppingcart.viewModel.ShoppingViewModel
 import com.FallTurtle.shoppingcart.adapter.CartAdapter
 import com.FallTurtle.shoppingcart.databinding.ActivityMainBinding
-import com.FallTurtle.shoppingcart.etc.CustomDialog
 import com.FallTurtle.shoppingcart.model.Cart
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.*
 
 /**
  * 앱 첫 실행 시 나타나는 화면을 담당하는 액티비티.
@@ -41,19 +38,16 @@ class MainActivity : AppCompatActivity() {
     /* onCreate()에서는 리사이클러뷰, 모델을 통한 뷰 갱신 및 이벤트 리스너 설정을 수행 */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        //뷰 바인딩으로 화면 설정
         setContentView(binding.root)
 
-        //리사이클러뷰의 어댑터 및 레이아웃 설정
+        //리사이클러뷰 설정
         binding.spList.adapter = cartAdapter
         binding.spList.layoutManager = LinearLayoutManager(this)
 
         //LiveData, observer 기능을 통해 실시간 쇼핑 리스트 데이터 변화 감지 및 출력
         val listObserver = Observer<List<Cart>> {
             cartAdapter.update(it)
-            Log.d("뚜뚜데이지4", it.joinToString(" "))
-            decideShowingDescription() // 화면이 빈 경우(리스트 아이템이 0개인 경우) 설명이 보이게 한다.
+            decideShowingDescription() // 화면이 빈 경우 설명이 보이게 한다.
         }
         viewModel.items.observe(this, listObserver)
 
@@ -63,13 +57,13 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
+        binding.etSearch.setText("")
         viewModel.getAllCarts()
     }
 
 
     //---------------------------------------
     // 내부 함수 영역
-    //
 
     /* 화면 내 여러가지 뷰에 이벤트 리스너를 추가하는 함수 */
     private fun initListeners(){

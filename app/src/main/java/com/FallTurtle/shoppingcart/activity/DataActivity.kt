@@ -2,7 +2,6 @@ package com.FallTurtle.shoppingcart.activity
 
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -36,7 +35,6 @@ class DataActivity : AppCompatActivity() {
     //세부 리사이클러뷰 어댑터
     private val itemAdapter: ItemAdapter = ItemAdapter()
 
-
     //페이지가 기존 아이템의 수정을 위해 실행되었을 경우 사용될 변수들
     private var isEdit:Boolean = false
     private var id:Int = -1
@@ -52,14 +50,11 @@ class DataActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        //리사이클러뷰의 어댑터 및 레이아웃 설정
+        //리사이클러뷰 설정
         binding.spList.adapter = itemAdapter
         binding.spList.layoutManager = LinearLayoutManager(this)
 
-        //버튼 기본 비활성화
-        binding.btnDelete.isClickable = false
-
-        //edit 작업인지 확인하고, 맞다면 edit 페이지 설정
+        //edit 여부에 따라 페이지 설정
         isEdit = intent.getBooleanExtra("isEdit", false)
         if(isEdit)
             editPageSetting()
@@ -80,14 +75,13 @@ class DataActivity : AppCompatActivity() {
 
     //---------------------------------------
     // 내부 함수 영역
-    //
 
     /* 아이템 추가 또는 저장을 위한 버튼에 이벤트 리스너를 추가하는 함수 */
     private fun initListeners(){
-        //아이템 추가 버튼 클릭 시 이벤트 (작성한 이름을 가져와 저장하고 editText 초기화)
+        //아이템 추가 버튼 클릭 시 이벤트 (작성한 이름을 가져와 저장, editText 초기화)
         binding.ibAdd.setOnClickListener {
             val tmp: String = binding.etItem.text.toString()
-            if (tmp != "") {
+            if (tmp.isBlank()) {
                 itemAdapter.insert(tmp)
                 binding.etItem.text.clear()
             }
@@ -133,11 +127,8 @@ class DataActivity : AppCompatActivity() {
         val currentDate = dateFormat.format(Date(System.currentTimeMillis()))
 
         //내용을 저장 (제목, 이름과 체크 여부를 담은 리스트, 수정 중일 경우 id)
-        val bigItem = Cart(
-            title = binding.etTitle.text.toString(), date = currentDate, items = itemAdapter.items
-        )
-        if(isEdit)
-            bigItem.id = id
+        val bigItem = Cart(title = binding.etTitle.text.toString(), date = currentDate, items = itemAdapter.items)
+        if(isEdit) bigItem.id = id
 
         //뷰모델을 통해 DB에 저장
         viewModel.insert(bigItem)
@@ -154,9 +145,7 @@ class DataActivity : AppCompatActivity() {
 
         //'네' 응답에 대한 처리 과정
         dialog.setOnPositiveClickListener(object : CustomDialog.ButtonClickListener {
-            override fun onClicked() {
-                contentSaveProgress()
-            }
+            override fun onClicked() { contentSaveProgress() }
         })
 
         //'아니오' 응답에 대한 처리 과정
@@ -195,5 +184,4 @@ class DataActivity : AppCompatActivity() {
         //생성하고 설정한 다이얼로그 화면에 출력
         dialog.create()
     }
-
 }

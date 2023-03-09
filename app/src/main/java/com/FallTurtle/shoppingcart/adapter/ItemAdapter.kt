@@ -19,7 +19,6 @@ class ItemAdapter : RecyclerView.Adapter<ItemAdapter.CustomViewHolder>() {
 
     //--------------------------------------------
     // 커스텀 뷰홀더 클래스
-    //
 
     inner class CustomViewHolder(private val binding: SmallListBinding) : ViewHolder(binding.root) {
         private var item: ChooseItem? = null
@@ -72,16 +71,13 @@ class ItemAdapter : RecyclerView.Adapter<ItemAdapter.CustomViewHolder>() {
 
     //--------------------------------------------
     // 리스트 관리를 위한 추가적인 함수 영역
-    //
 
-    //아이템 추가, 기본적으로 체크는 false로 설정
     fun insert(s: String) {
         items.add(ChooseItem(false, s))
         isChanged = true
         notifyItemInserted(itemCount)
     }
-    
-    //아이템 삭제 설정
+
     private fun delete(item: ChooseItem) {
         try {
             items.remove(item)
