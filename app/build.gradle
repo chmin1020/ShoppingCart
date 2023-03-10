@@ -14,8 +14,8 @@ android {
         applicationId "com.FallTurtle.shoppingcart"
         minSdkVersion 21
         targetSdkVersion 31
-        versionCode 4
-        versionName "1.21"
+        versionCode 5
+        versionName "1.22"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
