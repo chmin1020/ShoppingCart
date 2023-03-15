@@ -122,7 +122,15 @@ class DataActivity : AppCompatActivity() {
 
     /* 내용을 room 데이터베이스에 저장하기 위한 함수 */
     private fun contentSaveProgress(){
-        if(itemAdapter.items.)
+        if(binding.etTitle.text.isNullOrBlank()){
+            Toast.makeText(this, "리스트 제목을 입력해주세요!", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        if(itemAdapter.items.isEmpty()){
+            Toast.makeText(this, "리스트에 아이템이 없습니다!", Toast.LENGTH_SHORT).show()
+            return
+        }
 
         //현재 시간(날짜)을 가져와서 yyyy/MM/dd HH:mm 형식으로 저장
         val dateFormat = SimpleDateFormat("yyyy/MM/dd HH:mm", Locale.KOREA)
