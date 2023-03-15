@@ -2,13 +2,11 @@
 
 <p>kotlin 기반 개발, 지난 프로젝트(recipeDiary)에서 겹치는 코드 적용함.</p>
 <p>주요 기능 -> 쇼핑리스트 저장 / 수정/ 삭제, 각 아이템 체크 및 해제</p>
-<p style="background-color:green;">RecyclerView와 Room Database 중점 활용</p>
+<p style="background-color:green;">RecyclerView와 Room Database 활용 학습 목적</p>
 
 https://play.google.com/store/apps/details?id=com.FallTurtle.shoppingcart
 
 <br>
-
-
 
 #사용한 주요 기술
 
@@ -28,20 +26,13 @@ https://play.google.com/store/apps/details?id=com.FallTurtle.shoppingcart
   * room, repository, viewModel 부분에 hilt를 통한 종속성 주입 활용
 
 
-
---앱 사용 이미지에 변경 사항 생김 (추후 readme에 적용)--
-
 <h5>앱 예시 이미지1</h5>
-<p>작성한 여러 쇼핑 메모가 리스트로 저장됨</p>
 
-<img src="https://user-images.githubusercontent.com/70795841/123509719-0fa61f00-d6b2-11eb-95b8-725d2f223847.jpg">
+<p>작성한 여러 쇼핑 메모가 리스트로 저장됨. 각 쇼핑 메모 세부 사항 수정 및 삭제 가능함.</p>
+![main_light](https://user-images.githubusercontent.com/70795841/225316154-3cfe307e-12cc-4ce9-9dd1-f6c0e30d3b5a.jpg)
+![main_dark](https://user-images.githubusercontent.com/70795841/225316147-6c9ca7e3-8365-44ed-b124-b05d5a9f7950.jpg)
 
-<h5>앱 예시 이미지2</h5>
-<p>핸드폰 환경을 다크 모드로 지정 시 테마를 자동 변경하여 적용됨</p>
+<p>모바일 기기 설정 상황에 따라 다크모드 역시 적용 가능함.</p>
+![list_dark](https://user-images.githubusercontent.com/70795841/225316134-6784d88d-3409-4a72-a977-2dd6022515f6.jpg)
+![list_light](https://user-images.githubusercontent.com/70795841/225316143-0bbc93d7-f3e9-4b1c-9660-b989bc508338.jpg)
 
-<img src="https://user-images.githubusercontent.com/70795841/123509728-23518580-d6b2-11eb-85fb-1d44347b5e7d.jpg">
-
-<h5>앱 예시 이미지3</h5>
-<p>체크리스트 형식으로 다양한 아이템들 기록 및 저장 가능</p>
-
-<img src="https://user-images.githubusercontent.com/70795841/123509699-f309e700-d6b1-11eb-88a7-c1a26b755d03.jpg">
