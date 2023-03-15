@@ -81,7 +81,7 @@ class DataActivity : AppCompatActivity() {
         //아이템 추가 버튼 클릭 시 이벤트 (작성한 이름을 가져와 저장, editText 초기화)
         binding.ibAdd.setOnClickListener {
             val tmp: String = binding.etItem.text.toString()
-            if (tmp.isBlank()) {
+            if (tmp.isNotBlank()) {
                 itemAdapter.insert(tmp)
                 binding.etItem.text.clear()
             }
@@ -122,6 +122,8 @@ class DataActivity : AppCompatActivity() {
 
     /* 내용을 room 데이터베이스에 저장하기 위한 함수 */
     private fun contentSaveProgress(){
+        if(itemAdapter.items.)
+
         //현재 시간(날짜)을 가져와서 yyyy/MM/dd HH:mm 형식으로 저장
         val dateFormat = SimpleDateFormat("yyyy/MM/dd HH:mm", Locale.KOREA)
         val currentDate = dateFormat.format(Date(System.currentTimeMillis()))
