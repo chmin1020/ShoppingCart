@@ -31,10 +31,11 @@ https://play.google.com/store/apps/details?id=com.FallTurtle.shoppingcart
 <p>작성한 여러 쇼핑 메모가 리스트로 저장됨. 각 쇼핑 메모 세부 사항 수정 및 삭제 가능함.</p>
 
 ![main_light](https://user-images.githubusercontent.com/70795841/225316154-3cfe307e-12cc-4ce9-9dd1-f6c0e30d3b5a.jpg)
-![main_dark](https://user-images.githubusercontent.com/70795841/225316147-6c9ca7e3-8365-44ed-b124-b05d5a9f7950.jpg)
+![list_light](https://user-images.githubusercontent.com/70795841/225316143-0bbc93d7-f3e9-4b1c-9660-b989bc508338.jpg)
+
 
 <p>모바일 기기 설정 상황에 따라 다크모드 역시 적용 가능함.</p>
 
+![main_dark](https://user-images.githubusercontent.com/70795841/225316147-6c9ca7e3-8365-44ed-b124-b05d5a9f7950.jpg)
 ![list_dark](https://user-images.githubusercontent.com/70795841/225316134-6784d88d-3409-4a72-a977-2dd6022515f6.jpg)
-![list_light](https://user-images.githubusercontent.com/70795841/225316143-0bbc93d7-f3e9-4b1c-9660-b989bc508338.jpg)
 
